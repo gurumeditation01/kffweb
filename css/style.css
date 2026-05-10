@@ -89,7 +89,7 @@ body {
 
 .border-left {
     width:                var(--border-l);
-    background-image:     url('../assets/UI/BORDER_L.png');
+    background-image:     url('../assets/ui/BORDER_L.png');
     background-repeat:    repeat-y;
     background-position:  left top;
     background-size:      17px auto;
@@ -97,7 +97,7 @@ body {
 
 .border-right {
     width:                var(--border-r);
-    background-image:     url('../assets/UI/BORDER_R.png');
+    background-image:     url('../assets/ui/BORDER_R.png');
     background-repeat:    repeat-y;
     background-position:  right top;
     background-size:      17px auto;
