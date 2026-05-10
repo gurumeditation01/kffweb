@@ -423,6 +423,12 @@ body {
     height: 14.5%;
 }
 
+/* ─── Portrait-only vote button — outside video section, hidden on desktop/landscape ── */
+
+.hero-vote-portrait {
+    display: none;
+}
+
 /* ─── Hero vote — overlaid on machine base area within video frame ──── */
 
 .hero-vote {
@@ -571,12 +577,28 @@ body {
     .border-right .side-elem:nth-child(4) { top: 1251px; }
     .border-right .side-elem:nth-child(5) { top: 1576px; }
 
-    .vote-btn {
-        max-width: 280px;
+    .hero-vote { display: none; }
+
+    .hero-vote-portrait {
+        display:  block;
+        height:   0;
+        overflow: visible;
+        position: relative;
+        z-index:  3;
+        width:    100%;
     }
 
-    .hero-vote {
-        bottom: 1%;
+    .hero-vote-portrait .vote-btn-link {
+        display:   block;
+        position:  absolute;
+        left:      50%;
+        top:       0;
+        transform: translate(-50%, calc(-50% - 20px));
+        width:     280px;
+    }
+
+    .vote-btn {
+        max-width: 280px;
     }
 
     .video-section {
@@ -660,6 +682,8 @@ body {
     .countdown-sep   { font-size: clamp(1.7rem, 4.5vw, 4.5rem); }
     .countdown-label { font-size: clamp(0.42rem, 0.95vw, 0.76rem); }
 
-    .vote-btn  { max-width: 450px; }
-    .hero-vote { bottom: 1%; }
+    .hero-vote-portrait { display: none; }
+    .hero-vote          { display: block; bottom: 1%; }
+
+    .vote-btn { max-width: 450px; }
 }
