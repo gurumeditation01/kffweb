@@ -207,21 +207,18 @@ body {
     background:  #000;
 }
 
-/* Cinematic bottom fade — dissolves video into background texture */
+/* Short video fade-out — only last 40px, subtle */
 .video-section::after {
     content:        '';
     position:       absolute;
     bottom:         0;
     left:           0;
     right:          0;
-    height:         55%;
+    height:         40px;
     background:     linear-gradient(
         to bottom,
-        transparent          0%,
-        rgba(0, 0, 0, 0.35) 25%,
-        rgba(0, 0, 0, 0.72) 55%,
-        rgba(0, 0, 0, 0.95) 80%,
-        rgba(0, 0, 0, 1.00) 100%
+        transparent         0%,
+        rgba(0, 0, 0, 0.85) 100%
     );
     z-index:        1;
     pointer-events: none;
@@ -253,6 +250,19 @@ body {
     object-fit:      cover;
     object-position: center center;
     display:         block;
+}
+
+/* ─── Video → background transition strip ────────────────────── */
+
+.vid-transition {
+    width:        calc(100% + var(--border-l) + var(--border-r));
+    margin-left:  calc(-1 * var(--border-l));
+    height:       80px;
+    margin-top:   -1px;    /* close any subpixel gap */
+    background:   linear-gradient(to bottom, #000 0%, transparent 100%);
+    position:     relative;
+    z-index:      2;
+    pointer-events: none;
 }
 
 /* ─── Countdown anchor ───────────────────────────────────────── */
