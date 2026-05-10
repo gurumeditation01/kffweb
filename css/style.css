@@ -55,17 +55,12 @@ body {
    ═══════════════════════════════════════════════════════════════ */
 
 .page-frame {
-    max-width:            var(--page-max);
-    margin:               0 auto;
-    display:              flex;
-    align-items:          stretch;
-    min-height:           100vh;
-    position:             relative;
-    background-image:     url('../assets/ui/bg_01.webp');
-    background-size:      cover;
-    background-position:  center top;
-    background-repeat:    no-repeat;
-    background-attachment: fixed;
+    max-width:   var(--page-max);
+    margin:      0 auto;
+    display:     flex;
+    align-items: stretch;
+    min-height:  100vh;
+    position:    relative;
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -177,9 +172,14 @@ body {
    ═══════════════════════════════════════════════════════════════ */
 
 .content-col {
-    flex:       1;
-    min-width:  0;
-    background: transparent;
+    flex:                  1;
+    min-width:             0;
+    background-color:      #000;
+    background-image:      url('../assets/ui/bg_01.webp');
+    background-size:       100% auto;
+    background-position:   top center;
+    background-repeat:     repeat-y;
+    background-attachment: scroll;
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -472,8 +472,6 @@ body {
 
 /* Mobile — borders at screen edges, content between them */
 @media (max-width: 700px) {
-    .page-frame { background-attachment: scroll; }
-
     :root {
         --border-l: 50px;
         --border-r: 60px;
