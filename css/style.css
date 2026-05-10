@@ -516,6 +516,9 @@ body {
     .border-left  { background-size: 10px auto; }
     .border-right { background-size: 10px auto; }
 
+    .border-left  .side-elem { left:  10px; }
+    .border-right .side-elem { right: 10px; }
+
     /* Mobile: use mask-image for clean edge-to-edge fade, starting earlier */
     .border-left::before,
     .border-right::before { display: none; }
