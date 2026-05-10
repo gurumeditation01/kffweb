@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Rich Fast – Die Zeit läuft</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="page-frame">
+
+    <!-- ═══════════════ LEFT BORDER ═══════════════ -->
+    <aside class="border-col border-left" aria-hidden="true">
+        <img src="assets/UI/E_L_02.png" class="side-elem e-l-02" alt="">
+        <img src="assets/UI/E_L_01.png" class="side-elem e-l-01" alt="">
+        <img src="assets/UI/E_L_03.png" class="side-elem e-l-03" alt="">
+        <img src="assets/UI/E_L_02.png" class="side-elem e-l-02" alt="">
+        <img src="assets/UI/E_L_01.png" class="side-elem e-l-01" alt="">
+    </aside>
+
+    <!-- ═══════════════ CONTENT ═══════════════════ -->
+    <main class="content-col">
+
+        <!-- MACHINE VIDEO + COUNTDOWN — title is baked into the video -->
+        <section class="video-section">
+            <video
+                class="hero-video"
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="auto"
+            >
+                <source src="assets/Console_Web_Loop_04.mp4" type="video/mp4">
+            </video>
+
+            <div class="countdown-anchor">
+                <div class="countdown-screen">
+                    <div class="countdown" id="countdown">
+                        <div class="countdown-unit">
+                            <span class="countdown-label">Days</span>
+                            <span class="countdown-value" id="days">00</span>
+                        </div>
+                        <span class="countdown-sep">:</span>
+                        <div class="countdown-unit">
+                            <span class="countdown-label">Hours</span>
+                            <span class="countdown-value" id="hours">00</span>
+                        </div>
+                        <span class="countdown-sep">:</span>
+                        <div class="countdown-unit">
+                            <span class="countdown-label">Minutes</span>
+                            <span class="countdown-value" id="minutes">00</span>
+                        </div>
+                        <span class="countdown-sep">:</span>
+                        <div class="countdown-unit">
+                            <span class="countdown-label">Seconds</span>
+                            <span class="countdown-value" id="seconds">00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Invisible overlays on the two machine buttons -->
+            <a href="https://www.kuerzestfilm.at/" class="machine-btn-overlay machine-btn-left"  target="_blank" rel="noopener" aria-label="Get Rich Fast – zur Festival-Website"></a>
+            <a href="https://www.kuerzestfilm.at/" class="machine-btn-overlay machine-btn-right" target="_blank" rel="noopener" aria-label="Save the World – zur Festival-Website"></a>
+
+            <!-- Vote button — overlaid on machine shadow area at bottom of hero -->
+            <div class="hero-vote">
+                <a href="#vote" class="vote-btn-link">
+                    <img
+                        src="assets/UI/button_vote_01.png"
+                        class="vote-btn"
+                        alt="Vote jetzt für uns auf der Festival-Website"
+                    >
+                </a>
+            </div>
+        </section>
+
+        <!-- 3 · FILM DESCRIPTION -->
+        <section class="subtitle-section">
+            <p class="body-text">
+                Ein sozialkritischer Kurzfilm über die Doppelmoral unserer Zeit.
+                Wenn Menschen die Wahl haben, anderen zu helfen oder selbst sofort
+                reich zu werden, entscheiden sie sich oft überraschend schnell um.
+                Eine Geschichte über Gier, Verantwortung und den Zustand
+                unserer Gesellschaft.
+            </p>
+        </section>
+
+        <!-- 4 · CAST / TEAM -->
+        <section class="content-section">
+            <span class="section-label">Premium</span>
+            <h2 class="section-title">Team</h2>
+            <div class="placeholder-block">
+                <p class="placeholder-text">— Cast &amp; Team —</p>
+            </div>
+        </section>
+
+        <!-- 5 · MAKING OF -->
+        <section class="content-section">
+            <span class="section-label">Production / Making of</span>
+            <h2 class="section-title">Hinter den Kulissen.</h2>
+            <div class="placeholder-block">
+                <p class="placeholder-text">— Behind the Scenes —</p>
+            </div>
+        </section>
+
+        <!-- 6 · GAME -->
+        <section class="content-section">
+            <span class="section-label">Game Section</span>
+            <h2 class="section-title">Die Zeit läuft ab.<br>Entscheide dich jetzt.</h2>
+            <div class="placeholder-block">
+                <p class="placeholder-text">— Interactive Game —</p>
+            </div>
+        </section>
+
+        <!-- 7 · VOTING CTA -->
+        <section class="content-section voting-section">
+            <span class="section-label">Call to Action</span>
+            <p class="body-text">
+                Voting startet in Kürze. Jede Stimme zählt. Die Zeit läuft bereits.
+            </p>
+        </section>
+
+    </main>
+
+    <!-- ═══════════════ RIGHT BORDER ══════════════ -->
+    <aside class="border-col border-right" aria-hidden="true">
+        <img src="assets/UI/E_R_03.png" class="side-elem e-r-03" alt="">
+        <img src="assets/UI/E_R_01.png" class="side-elem e-r-01" alt="">
+        <img src="assets/UI/E_R_03.png" class="side-elem e-r-03" alt="">
+        <img src="assets/UI/E_R_01.png" class="side-elem e-r-01" alt="">
+        <img src="assets/UI/E_R_03.png" class="side-elem e-r-03" alt="">
+    </aside>
+
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>

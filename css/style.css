@@ -1,0 +1,597 @@
+/* ═══════════════════════════════════════════════════════════════
+   KFF WEBSITE — style.css
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── Custom Properties ──────────────────────────────────────── */
+:root {
+    --white:          #ffffff;
+    --dim:            rgba(255, 255, 255, 0.45);
+    --dimmer:         rgba(255, 255, 255, 0.20);
+    --rule:           rgba(255, 255, 255, 0.07);
+
+    /* Timer text — black on CRT screen */
+    --crt-text:       #0d0d0d;
+    --crt-dim:        rgba(0, 0, 0, 0.45);
+    --crt-sep:        rgba(0, 0, 0, 0.55);
+
+    /* Timer anchor — center of CRT screen in Loop 03 framing */
+    --screen-top:     39%;
+    --screen-left:    50%;
+
+    /* Border column widths — strip is on outer edge, elements point inward */
+    --border-l:       120px;   /* strip at far left, elements extend right into content */
+    --border-r:       130px;   /* strip at far right, elements extend left into content */
+
+    /* Total page frame */
+    --page-max:       1440px;
+}
+
+/* ─── Reset ──────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+html {
+    width:      100%;
+    background: #000;
+    color:      #fff;
+    font-family: 'Space Mono', 'Courier New', monospace;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    width:      100%;
+    /*
+     * overflow: clip (not hidden) — clips without creating a scroll container.
+     * overflow-x: hidden on html would turn html into the scroll container,
+     * suppressing overflow:visible on flex children. clip avoids that.
+     */
+    overflow-x: clip;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PAGE FRAME
+   Centered, constrained. Black void on either side on wide screens.
+   ═══════════════════════════════════════════════════════════════ */
+
+.page-frame {
+    max-width:   var(--page-max);
+    margin:      0 auto;
+    display:     flex;
+    align-items: stretch;
+    min-height:  100vh;
+    position:    relative;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BORDER COLUMNS
+   ═══════════════════════════════════════════════════════════════ */
+
+.border-col {
+    flex-shrink: 0;
+    position:    relative;   /* positioning context for absolutely-placed elements */
+    overflow:    visible;
+    z-index:     10;
+    /* Rail + elements fade in together — invisible over title, reveal through machine section */
+    -webkit-mask-image: linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 300px,
+        black       450px
+    );
+    mask-image: linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 300px,
+        black       450px
+    );
+}
+
+.border-left {
+    width:                var(--border-l);
+    background-image:     url('../assets/UI/BORDER_L.png');
+    background-repeat:    repeat-y;
+    background-position:  left top;
+    background-size:      17px auto;
+}
+
+.border-right {
+    width:                var(--border-r);
+    background-image:     url('../assets/UI/BORDER_R.png');
+    background-repeat:    repeat-y;
+    background-position:  right top;
+    background-size:      17px auto;
+}
+
+/* ─── Side elements: absolute, deterministic top stacking ─────── */
+
+.side-elem {
+    position: absolute;
+    display:  block;
+    height:   auto;
+}
+
+/* Horizontal anchor — elements mount on the inner face of the rail strip */
+.border-left  .side-elem { left:  17px; }
+.border-right .side-elem { right: 17px; }
+
+/*
+ * Element widths — set to ~50% of natural pixel width.
+ * Height is NOT constrained: browser scales proportionally from width.
+ * Actual rendered heights (used for stacking math below):
+ *   E_L_01: 38px wide → 38×(864/65)  = 505px tall
+ *   E_L_02: 50px wide → 50×(652/85)  = 384px tall
+ *   E_L_03: 110px wide→ 110×(610/203)= 331px tall
+ *   E_R_01: 38px wide → 38×(847/64)  = 503px tall
+ *   E_R_03: 52px wide → 52×(662/88)  = 391px tall
+ */
+.e-l-01 { width: 38px;  }
+.e-l-02 { width: 50px;  }
+.e-l-03 { width: 110px; }
+.e-l-04 { width: 46px;  }   /* unused currently */
+
+.e-r-01 { width: 38px;  }
+.e-r-02 { width: 70px;  }   /* unused currently */
+.e-r-03 { width: 52px;  }
+
+/*
+ * ─── Deterministic vertical stacking (desktop) ────────────────
+ * Formula: top[n] = top[n-1] + rendered-height[n-1] + GAP
+ * GAP = 100px   START = 650px
+ * Rendered heights from actual asset dimensions × display scale:
+ *
+ * Left: E_L_02(384) → E_L_01(505) → E_L_03(331) → E_L_02(384)  [4 elements desktop]
+ *   GAP=130px  START=480px
+ *   1: top=480               bottom=864
+ *   2: top=994   (864+130)   bottom=1499
+ *   3: top=1629  (1499+130)  bottom=1960
+ *   4: top=2090  (1960+130)  bottom=2474
+ */
+.border-left .side-elem:nth-child(1) { top:  480px; }
+.border-left .side-elem:nth-child(2) { top:  994px; }
+.border-left .side-elem:nth-child(3) { top: 1629px; }
+.border-left .side-elem:nth-child(4) { top: 2090px; }
+.border-left .side-elem:nth-child(5) { display: none; }
+
+/*
+ * Right: E_R_03(391) → E_R_01(503) → E_R_03(391) → E_R_01(503)  [4 elements desktop]
+ *   GAP=130px  START=480px
+ *   1: top=480               bottom=871
+ *   2: top=1001  (871+130)   bottom=1504
+ *   3: top=1634  (1504+130)  bottom=2025
+ *   4: top=2155  (2025+130)  bottom=2658
+ */
+.border-right .side-elem:nth-child(1) { top:  480px; }
+.border-right .side-elem:nth-child(2) { top: 1001px; }
+.border-right .side-elem:nth-child(3) { top: 1634px; }
+.border-right .side-elem:nth-child(4) { top: 2155px; }
+.border-right .side-elem:nth-child(5) { display: none; }
+
+/* ═══════════════════════════════════════════════════════════════
+   CONTENT COLUMN
+   ═══════════════════════════════════════════════════════════════ */
+
+.content-col {
+    flex:       1;
+    min-width:  0;
+    background: #000;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   VIDEO SECTION
+   Breaks out of content-col to span the full page-frame width.
+   At 1280px frame, 16:9 = 720px tall — roughly double the previous size.
+   ═══════════════════════════════════════════════════════════════ */
+
+.video-section {
+    position:    relative;
+    width:       calc(100% + var(--border-l) + var(--border-r));
+    margin-left: calc(-1 * var(--border-l));
+    /*
+     * 4:3 instead of 16:9 — at 1440px wide this gives 1080px height.
+     * object-fit: cover scales the 16:9 video to fill, zooming the
+     * machine ~1.33x larger with only ~240px side-crop each edge.
+     */
+    aspect-ratio: 4 / 3;
+    overflow:    hidden;
+    background:  #000;
+}
+
+/* Soft black fade at the top — blends into the title section */
+.video-section::before {
+    content:    '';
+    position:   absolute;
+    top:        0;
+    left:       0;
+    right:      0;
+    height:     16%;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.92)  0%,
+        rgba(0, 0, 0, 0.55) 50%,
+        rgba(0, 0, 0, 0.00) 100%
+    );
+    z-index:    1;
+    pointer-events: none;
+}
+
+.hero-video {
+    position:        absolute;
+    inset:           0;
+    width:           100%;
+    height:          100%;
+    object-fit:      cover;
+    object-position: center center;
+    display:         block;
+}
+
+/* ─── Countdown anchor ───────────────────────────────────────── */
+
+.countdown-anchor {
+    position:  absolute;
+    top:       var(--screen-top);
+    left:      var(--screen-left);
+    transform: translate(-50%, -50%);
+    z-index:   3;   /* above the ::before top-fade overlay (z-index 1) */
+}
+
+/* ─── Timer — no background, numbers float directly on machine screen ── */
+
+.countdown-screen {
+    background: transparent;
+    padding:    0;
+    position:   relative;
+    overflow:   visible;
+    opacity:    0.72;
+}
+
+/* No scanlines — clean text only */
+
+.countdown {
+    display:     flex;
+    align-items: flex-end;
+    gap:         clamp(1px, 0.35vw, 5px);
+}
+
+.countdown-unit {
+    display:        flex;
+    flex-direction: column;
+    align-items:    center;
+    gap:            3px;
+}
+
+.countdown-label {
+    font-family:    'Space Mono', monospace;
+    font-size:      clamp(0.32rem, 0.7vw, 0.52rem);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color:          var(--crt-dim);
+    line-height:    1;
+    white-space:    nowrap;
+}
+
+.countdown-value {
+    font-family:    'Bebas Neue', 'Impact', sans-serif;
+    font-size:      clamp(1.6rem, 4.6vw, 4.6rem);
+    font-weight:    400;
+    color:          var(--crt-text);
+    line-height:    1;
+    min-width:      2ch;
+    text-align:     center;
+    letter-spacing: 0.01em;
+}
+
+.countdown-sep {
+    font-family:    'Bebas Neue', 'Impact', sans-serif;
+    font-size:      clamp(1.4rem, 3.9vw, 3.9rem);
+    color:          var(--crt-sep);
+    line-height:    1;
+    padding-bottom: 0.08em;
+    flex-shrink:    0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   3. SUBTITLE / FILM DESCRIPTION
+   ═══════════════════════════════════════════════════════════════ */
+
+.subtitle-section {
+    padding:    clamp(2rem, 6vh, 4rem) 10%;
+    text-align: center;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SHARED CONTENT SECTIONS
+   ═══════════════════════════════════════════════════════════════ */
+
+.content-section {
+    padding:        clamp(3rem, 8vh, 6rem) 10%;
+    text-align:     center;
+    border-top:     1px solid var(--rule);
+    display:        flex;
+    flex-direction: column;
+    align-items:    center;
+}
+
+.section-label {
+    display:        block;
+    font-family:    'Space Mono', monospace;
+    font-size:      clamp(0.40rem, 0.8vw, 0.56rem);
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color:          var(--dimmer);
+    margin-bottom:  0.7em;
+}
+
+.section-title {
+    font-family:    'Bebas Neue', 'Impact', sans-serif;
+    font-size:      clamp(2rem, 5.5vw, 4.5rem);
+    line-height:    1.0;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color:          var(--white);
+    margin-bottom:  clamp(1.5rem, 4vh, 3rem);
+}
+
+.body-text {
+    font-family:    'Space Mono', monospace;
+    font-size:      clamp(0.52rem, 1vw, 0.72rem);
+    letter-spacing: 0.08em;
+    color:          var(--dim);
+    line-height:    2.0;
+    max-width:      500px;
+    margin:         0 auto;
+}
+
+.placeholder-block {
+    width:      100%;
+    border:     1px solid rgba(255, 255, 255, 0.08);
+    padding:    3.5rem 2rem;
+    margin-top: 0.5rem;
+}
+
+.placeholder-text {
+    font-family:    'Space Mono', monospace;
+    font-size:      0.60rem;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+    color:          rgba(255, 255, 255, 0.15);
+}
+
+/* ─── Machine button overlays — invisible hit areas over the two video buttons ── */
+
+.machine-btn-overlay {
+    position: absolute;
+    z-index:  3;
+    cursor:   pointer;
+}
+
+.machine-btn-left {
+    left:   32.5%;
+    top:    60.6%;
+    width:  13.3%;
+    height: 14.6%;
+}
+
+.machine-btn-right {
+    left:   54.0%;
+    top:    60.6%;
+    width:  13.2%;
+    height: 14.5%;
+}
+
+/* ─── Hero vote — overlaid on machine base area within video frame ──── */
+
+.hero-vote {
+    position:   absolute;
+    bottom:     3%;
+    left:       50%;
+    transform:  translateX(-50%);
+    z-index:    2;
+    width:      100%;
+    max-width:  870px;
+    text-align: center;
+    padding:    0 5%;
+}
+
+/* ─── Vote button — image asset ──────────────────────────────── */
+
+.vote-btn-link {
+    display:         block;
+    text-decoration: none;
+}
+
+@keyframes vote-glow-pulse {
+    0%, 100% {
+        filter: drop-shadow(0 0  8px rgba(255,255,255,0.26))
+                drop-shadow(0 0 22px rgba(255,255,255,0.12))
+                drop-shadow(0 0 50px rgba(255,255,255,0.06));
+    }
+    50% {
+        filter: drop-shadow(0 0 14px rgba(255,255,255,0.55))
+                drop-shadow(0 0 38px rgba(255,255,255,0.26))
+                drop-shadow(0 0 78px rgba(255,255,255,0.12));
+    }
+}
+
+.vote-btn {
+    display:     block;
+    width:       100%;
+    max-width:   850px;
+    height:      auto;
+    margin:      0 auto;
+    animation:   vote-glow-pulse 3s ease-in-out infinite;
+    transition:  filter 0.45s ease, transform 0.2s ease;
+    will-change: filter;
+}
+
+/* Desktop hover — stronger glow, pause the pulse */
+@media (hover: hover) {
+    .vote-btn:hover {
+        animation-play-state: paused;
+        filter: drop-shadow(0 0 12px rgba(255,255,255,0.60))
+                drop-shadow(0 0 28px rgba(255,255,255,0.26))
+                drop-shadow(0 0 52px rgba(255,255,255,0.10));
+        transform: scale(1.018);
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Tablet — page fills viewport, adjust border widths slightly */
+@media (max-width: 1280px) {
+    :root {
+        --page-max: 100%;
+    }
+}
+
+/* Mobile — borders at screen edges, content between them */
+@media (max-width: 700px) {
+    :root {
+        --border-l: 50px;
+        --border-r: 60px;
+    }
+
+    /*
+     * Mobile widths ~30% of natural. No max-height — height scales from width.
+     *   E_L_01: 20px → 20×(864/65)  = 266px
+     *   E_L_02: 24px → 24×(652/85)  = 184px
+     *   E_L_03: 30px → 30×(610/203) =  90px
+     *   E_R_01: 20px → 20×(847/64)  = 265px
+     *   E_R_03: 27px → 27×(662/88)  = 203px
+     */
+    .e-l-01 { width: 20px; }
+    .e-l-02 { width: 24px; }
+    .e-l-03 { width: 30px; }
+    .e-l-04 { width: 20px; }
+    .e-r-01 { width: 20px; }
+    .e-r-02 { width: 32px; }
+    .e-r-03 { width: 27px; }
+
+    /* Mobile mask */
+    .border-col {
+        -webkit-mask-image: linear-gradient(
+            to bottom,
+            transparent 0px,
+            transparent 280px,
+            black       420px
+        );
+        mask-image: linear-gradient(
+            to bottom,
+            transparent 0px,
+            transparent 280px,
+            black       420px
+        );
+    }
+
+    /* Restore 5th element hidden by the base (desktop) display:none rule */
+    .border-left  .side-elem:nth-child(5),
+    .border-right .side-elem:nth-child(5) { display: block; }
+
+    /*
+     * Mobile stacking — START=400px GAP=60px
+     * Left: E_L_02(184) E_L_01(266) E_L_03(90) E_L_02(184) E_L_01(266)
+     *   1: top=400               bottom=584
+     *   2: top=644   (584+60)    bottom=910
+     *   3: top=970   (910+60)    bottom=1060
+     *   4: top=1120  (1060+60)   bottom=1304
+     *   5: top=1364  (1304+60)   bottom=1630
+     */
+    .border-left .side-elem:nth-child(1) { top:  400px; }
+    .border-left .side-elem:nth-child(2) { top:  644px; }
+    .border-left .side-elem:nth-child(3) { top:  970px; }
+    .border-left .side-elem:nth-child(4) { top: 1120px; }
+    .border-left .side-elem:nth-child(5) { top: 1364px; }
+
+    /*
+     * Right: E_R_03(203) E_R_01(265) E_R_03(203) E_R_01(265) E_R_03(203)
+     *   1: top=400               bottom=603
+     *   2: top=663   (603+60)    bottom=928
+     *   3: top=988   (928+60)    bottom=1191
+     *   4: top=1251  (1191+60)   bottom=1516
+     *   5: top=1576  (1516+60)   bottom=1779
+     */
+    .border-right .side-elem:nth-child(1) { top:  400px; }
+    .border-right .side-elem:nth-child(2) { top:  663px; }
+    .border-right .side-elem:nth-child(3) { top:  988px; }
+    .border-right .side-elem:nth-child(4) { top: 1251px; }
+    .border-right .side-elem:nth-child(5) { top: 1576px; }
+
+    .vote-btn {
+        max-width: 240px;   /* scale down button on mobile */
+    }
+
+    .video-section {
+        aspect-ratio: auto;
+        height: 90vw;      /* taller crop on mobile — keeps machine screen prominent */
+        min-height: 280px;
+    }
+
+    .subtitle-section,
+    .content-section {
+        padding-left:  6%;
+        padding-right: 6%;
+    }
+
+    .countdown-value { font-size: clamp(1.0rem, 4.5vw, 1.8rem); }
+    .countdown-sep   { font-size: clamp(0.9rem, 3.8vw, 1.5rem); }
+    .countdown-label { font-size: clamp(0.28rem, 1.6vw, 0.44rem); }
+}
+
+@media (max-width: 420px) {
+    :root {
+        --border-l: 38px;
+        --border-r: 44px;
+    }
+
+    /*
+     * 420px widths ~23% of natural:
+     *   E_L_01: 15px → 15×(864/65)  = 199px
+     *   E_L_02: 18px → 18×(652/85)  = 138px
+     *   E_L_03: 21px → 21×(610/203) =  63px
+     *   E_R_01: 15px → 15×(847/64)  = 198px
+     *   E_R_03: 20px → 20×(662/88)  = 151px
+     */
+    .e-l-01 { width: 15px; }
+    .e-l-02 { width: 18px; }
+    .e-l-03 { width: 21px; }
+    .e-l-04 { width: 15px; }
+    .e-r-01 { width: 15px; }
+    .e-r-02 { width: 24px; }
+    .e-r-03 { width: 20px; }
+
+    /*
+     * 420px stacking — START=350px GAP=50px
+     * Left: E_L_02(138) E_L_01(199) E_L_03(63) E_L_02(138) E_L_01(199)
+     *   1: top=350               bottom=488
+     *   2: top=538   (488+50)    bottom=737
+     *   3: top=787   (737+50)    bottom=850
+     *   4: top=900   (850+50)    bottom=1038
+     *   5: top=1088  (1038+50)   bottom=1287
+     */
+    .border-left .side-elem:nth-child(1) { top:  350px; }
+    .border-left .side-elem:nth-child(2) { top:  538px; }
+    .border-left .side-elem:nth-child(3) { top:  787px; }
+    .border-left .side-elem:nth-child(4) { top:  900px; }
+    .border-left .side-elem:nth-child(5) { top: 1088px; }
+
+    /*
+     * Right: E_R_03(151) E_R_01(198) E_R_03(151) E_R_01(198) E_R_03(151)
+     *   1: top=350               bottom=501
+     *   2: top=551   (501+50)    bottom=749
+     *   3: top=799   (749+50)    bottom=950
+     *   4: top=1000  (950+50)    bottom=1198
+     *   5: top=1248  (1198+50)   bottom=1399
+     */
+    .border-right .side-elem:nth-child(1) { top:  350px; }
+    .border-right .side-elem:nth-child(2) { top:  551px; }
+    .border-right .side-elem:nth-child(3) { top:  799px; }
+    .border-right .side-elem:nth-child(4) { top: 1000px; }
+    .border-right .side-elem:nth-child(5) { top: 1248px; }
+}
+
+/* Landscape phones */
+@media (max-height: 480px) and (orientation: landscape) {
+    .video-section { height: 85vh; aspect-ratio: unset; }
+}
