@@ -513,17 +513,9 @@ body {
     .e-r-02 { width: 32px; }
     .e-r-03 { width: 27px; }
 
-    /* Mobile fade — shorter than desktop */
+    /* No rail overlay on mobile — video must reach screen edge */
     .border-left::before,
-    .border-right::before {
-        height:     420px;
-        background: linear-gradient(
-            to bottom,
-            #000 0px,
-            #000 280px,
-            transparent 420px
-        );
-    }
+    .border-right::before { display: none; }
 
     /* Restore 5th element hidden by the base (desktop) display:none rule */
     .border-left  .side-elem:nth-child(5),
