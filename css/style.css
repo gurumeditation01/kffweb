@@ -513,6 +513,9 @@ body {
     .e-r-02 { width: 32px; }
     .e-r-03 { width: 27px; }
 
+    .border-left  { background-size: 10px auto; }
+    .border-right { background-size: 10px auto; }
+
     /* Mobile: use mask-image for clean edge-to-edge fade, starting earlier */
     .border-left::before,
     .border-right::before { display: none; }
