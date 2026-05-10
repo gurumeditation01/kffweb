@@ -77,19 +77,24 @@ body {
     position:    relative;   /* positioning context for absolutely-placed elements */
     overflow:    visible;
     z-index:     10;
-    /* Rail + elements fade in together — invisible over title, reveal through machine section */
-    -webkit-mask-image: linear-gradient(
+}
+
+/* Black overlay fades rail in from the top — replaces mask-image which clips overflow E-elements */
+.border-col::before {
+    content:        '';
+    position:       absolute;
+    top:            0;
+    left:           0;
+    right:          0;
+    height:         450px;
+    background:     linear-gradient(
         to bottom,
-        transparent 0px,
-        transparent 300px,
-        black       450px
+        #000 0px,
+        #000 300px,
+        transparent 450px
     );
-    mask-image: linear-gradient(
-        to bottom,
-        transparent 0px,
-        transparent 300px,
-        black       450px
-    );
+    z-index:        1;
+    pointer-events: none;
 }
 
 .border-left {
@@ -495,19 +500,14 @@ body {
     .e-r-02 { width: 32px; }
     .e-r-03 { width: 27px; }
 
-    /* Mobile mask */
-    .border-col {
-        -webkit-mask-image: linear-gradient(
+    /* Mobile fade — shorter than desktop */
+    .border-col::before {
+        height:     420px;
+        background: linear-gradient(
             to bottom,
-            transparent 0px,
-            transparent 280px,
-            black       420px
-        );
-        mask-image: linear-gradient(
-            to bottom,
-            transparent 0px,
-            transparent 280px,
-            black       420px
+            #000 0px,
+            #000 280px,
+            transparent 420px
         );
     }
 
