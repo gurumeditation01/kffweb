@@ -513,9 +513,10 @@ body {
     .e-r-02 { width: 32px; }
     .e-r-03 { width: 27px; }
 
-    /* Mobile rail fade — restored */
+    /* Mobile rail fade — 4px wide, barely touches video edge */
     .border-left::before,
     .border-right::before {
+        width:      4px;
         height:     420px;
         background: linear-gradient(
             to bottom,
@@ -524,9 +525,6 @@ body {
             transparent 420px
         );
     }
-
-    /* Video paints above border columns on mobile so rail overlay doesn't clip it */
-    .video-section { z-index: 20; }
 
     /* Restore 5th element hidden by the base (desktop) display:none rule */
     .border-left  .side-elem:nth-child(5),
