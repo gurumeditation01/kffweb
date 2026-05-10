@@ -521,14 +521,14 @@ body {
         -webkit-mask-image: linear-gradient(
             to bottom,
             transparent   0px,
-            transparent 100px,
-            black       250px
+            transparent 200px,
+            black       300px
         );
         mask-image: linear-gradient(
             to bottom,
             transparent   0px,
-            transparent 100px,
-            black       250px
+            transparent 200px,
+            black       300px
         );
     }
 
