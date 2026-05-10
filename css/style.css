@@ -513,16 +513,22 @@ body {
     .e-r-02 { width: 32px; }
     .e-r-03 { width: 27px; }
 
-    /* Mobile rail fade — 4px wide, barely touches video edge */
+    /* Mobile: use mask-image for clean edge-to-edge fade, starting earlier */
     .border-left::before,
-    .border-right::before {
-        width:      4px;
-        height:     420px;
-        background: linear-gradient(
+    .border-right::before { display: none; }
+
+    .border-col {
+        -webkit-mask-image: linear-gradient(
             to bottom,
-            #000 0px,
-            #000 280px,
-            transparent 420px
+            transparent   0px,
+            transparent 100px,
+            black       250px
+        );
+        mask-image: linear-gradient(
+            to bottom,
+            transparent   0px,
+            transparent 100px,
+            black       250px
         );
     }
 
