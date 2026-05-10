@@ -63,8 +63,8 @@ body {
     position:             relative;
     background-color:     #000;
     background-image:     url('../assets/ui/bg_01.webp');
-    background-size:      calc(100% - var(--border-l) - var(--border-r)) auto;
-    background-position:  var(--border-l) 0;
+    background-size:      100% auto;
+    background-position:  0 -600px;
     background-repeat:    repeat-y;
 }
 
