@@ -55,12 +55,17 @@ body {
    ═══════════════════════════════════════════════════════════════ */
 
 .page-frame {
-    max-width:   var(--page-max);
-    margin:      0 auto;
-    display:     flex;
-    align-items: stretch;
-    min-height:  100vh;
-    position:    relative;
+    max-width:            var(--page-max);
+    margin:               0 auto;
+    display:              flex;
+    align-items:          stretch;
+    min-height:           100vh;
+    position:             relative;
+    background-color:     #000;
+    background-image:     url('../assets/ui/bg_01.webp');
+    background-size:      calc(100% - var(--border-l) - var(--border-r)) auto;
+    background-position:  var(--border-l) 0;
+    background-repeat:    repeat-y;
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -172,14 +177,9 @@ body {
    ═══════════════════════════════════════════════════════════════ */
 
 .content-col {
-    flex:                  1;
-    min-width:             0;
-    background-color:      #000;
-    background-image:      url('../assets/ui/bg_01.webp');
-    background-size:       100% auto;
-    background-position:   top center;
-    background-repeat:     repeat-y;
-    background-attachment: scroll;
+    flex:       1;
+    min-width:  0;
+    background: transparent;
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -209,13 +209,14 @@ body {
     bottom:         0;
     left:           0;
     right:          0;
-    height:         45%;
+    height:         55%;
     background:     linear-gradient(
         to bottom,
         transparent          0%,
-        rgba(0, 0, 0, 0.55) 40%,
-        rgba(0, 0, 0, 0.88) 70%,
-        rgba(0, 0, 0, 0.98) 100%
+        rgba(0, 0, 0, 0.35) 25%,
+        rgba(0, 0, 0, 0.72) 55%,
+        rgba(0, 0, 0, 0.95) 80%,
+        rgba(0, 0, 0, 1.00) 100%
     );
     z-index:        1;
     pointer-events: none;
@@ -287,6 +288,7 @@ body {
 .countdown-label {
     font-family:    'Space Mono', monospace;
     font-size:      clamp(0.32rem, 0.7vw, 0.52rem);
+    font-weight:    700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color:          var(--crt-dim);
