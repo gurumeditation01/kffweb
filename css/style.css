@@ -772,135 +772,233 @@ body {
    GAME SECTION
    ═══════════════════════════════════════════════════════════════ */
 
-.game-wrap {
-    display:         flex;
-    gap:             3.5rem;
-    width:           100%;
-    max-width:       860px;
-    align-items:     flex-start;
-    justify-content: center;
+:root {
+    --gm-w:      100%;
+    --gz-lx:     28.5%;
+    --gz-ly:     63.5%;
+    --gz-rx:     40%;
+    --gz-ry:     63.5%;
+    --gz-sz:      8%;
+    --gscreen-l: 26.5%;
+    --gscreen-t: 17.5%;
+    --gscreen-w: 15.5%;
+    --gscreen-h: 27%;
+    --gsb-r:     12%;
+    --gsb-t:     24%;
+    --gsb-w:     27.5%;
+    --gm-p-x:    0%;     /* portrait: horizontal pan of machine-inner from center */
 }
 
-/* ─── Arena ──────────────────────────────────────────────────── */
-
-.game-arena {
-    flex:            0 0 auto;
-    display:         flex;
-    flex-direction:  column;
-    align-items:     center;
-    gap:             1.4rem;
+/* Layout override — game section is block, positioning context for scoreboard */
+.game-section {
+    display:       block;
+    position:      relative;
+    padding-left:  0;
+    padding-right: 0;
+    text-align:    center;
 }
 
-/* CRT monitor frame */
-.game-screen-frame {
-    border:     2px solid rgba(255, 255, 255, 0.14);
-    background: #080808;
+.game-section .section-title {
+    padding-left:  10%;
+    padding-right: 10%;
+}
+
+/* ─── Machine — breaks out to full page-frame width ─────────── */
+
+.game-machine {
+    width:           calc(100% + var(--border-l) + var(--border-r));
+    margin-left:     calc(-1 * var(--border-l));
+    background:      transparent;
+}
+
+/* Inner wrapper: % of the full border-to-border width, is the positioning
+   context for screen overlay, button zones and scoreboard */
+.game-machine-inner {
     position:   relative;
-    box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.03),
-                inset 0 0 30px rgba(0, 0, 0, 0.6);
+    width:      var(--gm-w);
+    background: transparent;
 }
 
-.game-screen-inner {
-    width:           280px;
-    height:          170px;
+.game-machine-img {
+    display: block;
+    width:   100%;
+    height:  auto;
+}
+
+/* Screen overlay — tracks CRT screen position in the graphic */
+.game-screen-overlay {
+    position:        absolute;
+    left:            var(--gscreen-l);
+    top:             var(--gscreen-t);
+    width:           var(--gscreen-w);
+    height:          var(--gscreen-h);
     display:         flex;
     flex-direction:  column;
     align-items:     center;
     justify-content: center;
-    gap:             0.4rem;
+    gap:             0.2rem;
+    overflow:        hidden;
 }
 
-/* Large countdown number — 3 → 2 → 1 → 0 */
+/* Invisible button zone container */
+.game-zones {
+    position:       absolute;
+    inset:          0;
+    pointer-events: none;
+}
+
+/* Invisible circles over the two physical machine buttons */
+.game-zone {
+    position:                    absolute;
+    background:                  transparent;
+    border:                      none;
+    cursor:                      pointer;
+    border-radius:               50%;
+    pointer-events:              auto;
+    -webkit-tap-highlight-color: transparent;
+    padding:                     0;
+}
+
+.game-zone-l {
+    left:         var(--gz-lx);
+    top:          var(--gz-ly);
+    width:        var(--gz-sz);
+    aspect-ratio: 1;
+    transform:    translate(-50%, -50%);
+}
+
+.game-zone-r {
+    left:         var(--gz-rx);
+    top:          var(--gz-ry);
+    width:        var(--gz-sz);
+    aspect-ratio: 1;
+    transform:    translate(-50%, -50%);
+}
+
+.game-zone:disabled { cursor: default; pointer-events: none; }
+
+/* ─── Screen text — black on the light CRT display ──────────── */
+
 .game-number {
-    font-family:    'Bebas Neue', sans-serif;
-    font-size:      clamp(5rem, 10vw, 9rem);
+    font-family:    'Space Mono', monospace;
+    font-size:      clamp(1rem, 3vw, 3rem);
     line-height:    1;
-    color:          rgba(255, 255, 255, 0.88);
-    letter-spacing: 0.02em;
+    color:          #141414;
+    letter-spacing: 0.04em;
     user-select:    none;
 }
 
 .game-number--zero {
-    color:       #ff4040;
-    text-shadow: 0 0 28px rgba(255, 64, 64, 0.55);
+    color:       #aa0000;
+    text-shadow: none;
 }
 
-/* Result panel (hidden until game ends) */
 .game-result {
     display:        flex;
     flex-direction: column;
     align-items:    center;
-    gap:            0.3rem;
+    gap:            0.2rem;
     text-align:     center;
 }
 
 .game-result-value {
-    font-family:    'Bebas Neue', sans-serif;
-    font-size:      clamp(2.4rem, 5vw, 4rem);
+    font-family:    'Space Mono', monospace;
+    font-size:      clamp(0.55rem, 1.4vw, 1.2rem);
     line-height:    1;
-    color:          #fff;
-    letter-spacing: 0.04em;
+    color:          #141414;
+    letter-spacing: 0.02em;
 }
 
 .game-result-dir {
     font-family:    'Space Mono', monospace;
-    font-size:      clamp(0.50rem, 1.1vw, 0.66rem);
-    letter-spacing: 0.24em;
+    font-size:      clamp(0.28rem, 0.6vw, 0.50rem);
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    color:          var(--dim);
+    color:          #444;
+    text-shadow:    none;
 }
 
-.game-result-dir--perfect {
-    color:       #44e090;
-    text-shadow: 0 0 14px rgba(68, 224, 144, 0.45);
+.game-result-dir--perfect { color: #005522; }
+.game-result-dir--early   { color: #883300; }
+.game-result-dir--late    { color: #002266; }
+
+/* ─── Scoreboard — absolute over the right table area ────────── */
+
+.game-scoreboard {
+    position: absolute;
+    right:    var(--gsb-r);
+    top:      var(--gsb-t);
+    width:    var(--gsb-w);
+    z-index:  2;
 }
 
-.game-result-dir--early { color: #ffaa44; }
-.game-result-dir--late  { color: #55aaff; }
-
-/* Two large machine buttons — GET RICH FAST / SAVE THE WORLD */
-.game-btns {
-    display: flex;
-    gap:     1.2rem;
+.game-scoreboard-img {
+    display: block;
+    width:   100%;
+    height:  auto;
 }
 
-.game-btn {
-    font-family:    'Bebas Neue', sans-serif;
-    font-size:      clamp(1.0rem, 2.2vw, 1.5rem);
-    letter-spacing: 0.06em;
-    line-height:    1.2;
-    color:          #fff;
-    background:     transparent;
-    border:         2px solid rgba(255, 255, 255, 0.28);
-    padding:        1.0rem 1.2rem;
-    cursor:         pointer;
-    min-width:      110px;
+.game-scores {
+    position:       absolute;
+    top:            15%;
+    left:           9%;
+    right:          9%;
+    bottom:         4%;
+    list-style:     none;
+    overflow:       hidden;
+    display:        flex;
+    flex-direction: column;
+}
+
+.game-score-entry {
+    display:               grid;
+    grid-template-columns: 1fr auto auto;
+    gap:                   0.3rem;
+    align-items:           center;
+    padding:               0.28rem 0;
+    border-bottom:         1px solid rgba(0, 0, 0, 0.10);
+}
+
+.gs-name {
+    font-family:    'Space Mono', monospace;
+    font-size:      clamp(0.50rem, 1.0vw, 0.72rem);
+    letter-spacing: 0.04em;
+    color:          #1a1a1a;
+    overflow:       hidden;
+    text-overflow:  ellipsis;
+    white-space:    nowrap;
+}
+
+.gs-val {
+    font-family:    'Space Mono', monospace;
+    font-size:      clamp(0.50rem, 1.0vw, 0.72rem);
+    letter-spacing: 0.02em;
+    color:          #444;
+    white-space:    nowrap;
+}
+
+.gs-dir {
+    font-size:  clamp(0.54rem, 1.05vw, 0.74rem);
+    color:      #666;
+    text-align: center;
+    min-width:  1.1em;
+}
+
+.game-score-empty {
+    font-family:    'Space Mono', monospace;
+    font-size:      clamp(0.34rem, 0.65vw, 0.48rem);
+    letter-spacing: 0.12em;
+    color:          #666;
+    padding:        0.4rem 0;
     text-align:     center;
-    transition:     border-color 0.15s ease, background 0.15s ease,
-                    transform 0.08s ease;
-    -webkit-tap-highlight-color: transparent;
-    user-select:    none;
 }
 
-.game-btn:not(:disabled):hover {
-    border-color: rgba(255, 255, 255, 0.65);
-    background:   rgba(255, 255, 255, 0.06);
-}
+/* ─── Controls ───────────────────────────────────────────────── */
 
-.game-btn:not(:disabled):active {
-    transform:  scale(0.94);
-    background: rgba(255, 255, 255, 0.12);
-}
-
-.game-btn:disabled {
-    opacity: 0.25;
-    cursor:  default;
-}
-
-/* Start / Replay CTA */
 .game-start-wrap {
     display:         flex;
     justify-content: center;
+    margin-top:      1.4rem;
 }
 
 .game-start-btn {
@@ -920,12 +1018,12 @@ body {
 .game-start-btn:hover  { background: rgba(255, 255, 255, 0.85); }
 .game-start-btn:active { transform: scale(0.96); }
 
-/* Post-game panel — name entry + replay */
 .game-post {
     display:        flex;
     flex-direction: column;
     align-items:    center;
     gap:            0.9rem;
+    margin-top:     1.4rem;
 }
 
 .game-name-wrap {
@@ -987,95 +1085,155 @@ body {
     border-color: rgba(255, 255, 255, 0.38);
 }
 
-/* ─── Leaderboard ────────────────────────────────────────────── */
+/* ─── Debug panel (TEMP) ─────────────────────────────────────── */
 
-.game-board {
-    flex:      1;
-    min-width: 0;
-    max-width: 320px;
+#game-debug:empty { display: none; }
+
+#game-debug {
+    position:   fixed;
+    top:        12px;
+    right:      12px;
+    width:      220px;
+    background: rgba(0, 0, 0, 0.90);
+    color:      #0f0;
+    padding:    10px 12px;
+    font:       11px/1.6 monospace;
+    z-index:    9999;
+    border:     1px solid rgba(255, 255, 255, 0.14);
 }
 
-.game-board-title {
-    font-family:    'Space Mono', monospace;
-    font-size:      clamp(0.42rem, 0.82vw, 0.58rem);
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    color:          var(--dimmer);
-    margin-bottom:  0.9rem;
-    padding-bottom: 0.5rem;
-    border-bottom:  1px solid var(--rule);
-}
-
-.game-scores {
-    list-style:     none;
-    display:        flex;
-    flex-direction: column;
-}
-
-.game-score-entry {
-    display:               grid;
-    grid-template-columns: 1fr auto auto;
-    gap:                   0.5rem;
-    align-items:           center;
-    padding:               0.42rem 0;
-    border-bottom:         1px solid var(--rule);
-}
-
-.gs-name {
-    font-family:   'Space Mono', monospace;
-    font-size:     0.60rem;
-    letter-spacing: 0.07em;
-    color:         rgba(255, 255, 255, 0.72);
-    overflow:      hidden;
-    text-overflow: ellipsis;
-    white-space:   nowrap;
-}
-
-.gs-val {
-    font-family:    'Space Mono', monospace;
-    font-size:      0.60rem;
-    letter-spacing: 0.04em;
-    color:          rgba(255, 255, 255, 0.45);
-    white-space:    nowrap;
-}
-
-.gs-dir {
-    font-size:  0.70rem;
-    color:      rgba(255, 255, 255, 0.32);
-    text-align: center;
-    min-width:  1.4em;
-}
-
-.game-score-empty {
-    font-family:    'Space Mono', monospace;
-    font-size:      0.54rem;
-    letter-spacing: 0.14em;
-    color:          var(--dimmer);
-    padding:        0.5rem 0;
-    text-align:     center;
-}
-
-/* ─── Game — mobile portrait ─────────────────────────────────── */
 @media (max-width: 700px) {
-    .game-wrap {
-        flex-direction: column;
-        align-items:    center;
-        gap:            2.5rem;
+    #game-debug {
+        top:        auto;
+        right:      0;
+        bottom:     0;
+        left:       0;
+        width:      100%;
+        max-height: 42vh;
+        overflow-y: auto;
+        box-sizing: border-box;
+        display:    flex;
+        flex-wrap:  wrap;
+        gap:        0 12px;
+        font-size:  10px;
+    }
+    #game-debug .gd-title  { width: 100%; }
+    #game-debug .gd-modes  { width: 100%; }
+    #game-debug .gd-sep    { width: 100%; }
+    #game-debug .gd-row    { width: calc(50% - 6px); }
+    #game-debug #gd-out    { width: 100%; }
+}
+
+.gd-title {
+    font-weight:    bold;
+    color:          #fff;
+    margin-bottom:  5px;
+    padding-bottom: 4px;
+    border-bottom:  1px solid #333;
+}
+
+.gd-modes {
+    display:         flex;
+    gap:             4px;
+    margin-bottom:   6px;
+}
+
+.gd-mode {
+    flex:         1;
+    background:   #222;
+    color:        #777;
+    border:       1px solid #444;
+    font:         9px/1 monospace;
+    padding:      3px 0;
+    cursor:       pointer;
+}
+
+.gd-mode--active {
+    background: #0a0;
+    color:      #fff;
+    border-color: #0d0;
+}
+
+.gd-sep {
+    color:        #555;
+    font-size:    9px;
+    margin:       5px 0 2px;
+    letter-spacing: 0.05em;
+}
+
+.gd-row {
+    display:     flex;
+    align-items: center;
+    gap:         4px;
+    font-size:   10px;
+    color:       #aaa;
+    min-width:   34px;
+    white-space: nowrap;
+}
+
+.gd-row input[type=range] { flex: 1; height: 12px; }
+.gd-row span { color: #0f0; min-width: 36px; text-align: right; }
+
+#gd-out {
+    margin-top:  6px;
+    font-size:   9px;
+    color:       #ff0;
+    border-top:  1px solid #333;
+    padding-top: 4px;
+    white-space: pre;
+}
+
+/* ─── Game section — portrait calibration values ─────────────── */
+@media (max-width: 700px) {
+    :root {
+        --gm-w:      250%;
+        --gm-p-x:    39.5%;
+        --gz-ly:     63.5%;
+        --gz-ry:     63.5%;
+        --gz-sz:     10.5%;
+        --gscreen-t: 18%;
+        --gscreen-h: 26.5%;
+        --gsb-w:     50%;
+    }
+}
+
+/* ─── Game section — portrait layout ─────────────────────────── */
+@media (max-width: 700px) {
+    /* Border-to-border breakout; overflow:hidden clips scaled/panned inner */
+    .game-machine {
+        width:       calc(100% + var(--border-l) + var(--border-r));
+        margin-left: calc(-1 * var(--border-l));
+        overflow:    hidden;
     }
 
-    .game-screen-inner {
-        width:  240px;
-        height: 150px;
+    /* Scale (--gm-w > 100% = zoom) and pan (--gm-p-x = shift from centre) */
+    .game-machine-inner {
+        margin-left: calc((100% - var(--gm-w)) / 2 + var(--gm-p-x));
     }
 
-    .game-board {
-        width:     100%;
-        max-width: 380px;
+    /* Scoreboard — independent block below game controls */
+    .game-scoreboard {
+        position:  relative;
+        right:     auto;
+        top:       auto;
+        width:     var(--gsb-w);
+        margin:    2rem auto 0;
+        z-index:   auto;
     }
 
-    .game-btn {
-        font-size: clamp(0.95rem, 4vw, 1.2rem);
-        padding:   0.85rem 1rem;
-        min-width: 95px;
+    /* Smaller controls */
+    .game-start-btn {
+        font-size: clamp(0.9rem, 3.8vw, 1.2rem);
+        padding:   0.5rem 1.6rem;
+    }
+
+    .game-action-btn {
+        font-size: 0.50rem;
+        padding:   0.38rem 1.1rem;
+    }
+
+    .game-name-input {
+        font-size: 0.62rem;
+        max-width: 200px;
     }
 }

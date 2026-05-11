@@ -122,50 +122,165 @@
         <section class="content-section game-section">
             <h2 class="section-title">Die Zeit läuft ab.<br>Entscheide dich jetzt.</h2>
 
-            <div class="game-wrap">
+            <!-- Machine: centered, width controlled by --gm-w slider -->
+            <div class="game-machine">
+                <div class="game-machine-inner">
+                    <img src="assets/ui/console_game_01.webp" class="game-machine-img" alt="">
 
-                <!-- Arena: screen + buttons -->
-                <div class="game-arena">
-                    <div class="game-screen-frame">
-                        <div class="game-screen-inner">
-                            <div id="game-countdown" class="game-number">–</div>
-                            <div id="game-result" class="game-result" hidden>
-                                <div id="game-result-value" class="game-result-value"></div>
-                                <div id="game-result-dir"   class="game-result-dir"></div>
-                            </div>
+                    <!-- Screen — black numbers on CRT display -->
+                    <div class="game-screen-overlay">
+                        <div id="game-countdown" class="game-number">–</div>
+                        <div id="game-result" class="game-result" hidden>
+                            <div id="game-result-value" class="game-result-value"></div>
+                            <div id="game-result-dir"   class="game-result-dir"></div>
                         </div>
                     </div>
 
-                    <div id="game-btns" class="game-btns" hidden>
-                        <button class="game-btn" id="game-btn-l">GET<br>RICH<br>FAST</button>
-                        <button class="game-btn" id="game-btn-r">SAVE<br>THE<br>WORLD</button>
-                    </div>
-
-                    <div id="game-start-wrap" class="game-start-wrap">
-                        <button id="game-start" class="game-start-btn">SPIELEN</button>
-                    </div>
-
-                    <div id="game-post" class="game-post" hidden>
-                        <div id="game-name-wrap" class="game-name-wrap">
-                            <input id="game-name" type="text" maxlength="20"
-                                   placeholder="Dein Name" class="game-name-input"
-                                   autocomplete="off">
-                            <button id="game-name-submit" class="game-action-btn">EINTRAGEN</button>
-                            <button id="game-name-skip"   class="game-action-btn game-action-btn--dim">ÜBERSPRINGEN</button>
-                        </div>
-                        <button id="game-replay" class="game-start-btn" hidden>NOCHMAL</button>
+                    <!-- Invisible zones over physical buttons -->
+                    <div id="game-btns" class="game-zones" hidden>
+                        <button class="game-zone game-zone-l" id="game-btn-l" aria-label="Get Rich Fast"></button>
+                        <button class="game-zone game-zone-r" id="game-btn-r" aria-label="Save The World"></button>
                     </div>
                 </div>
-
-                <!-- Leaderboard -->
-                <div class="game-board">
-                    <h3 class="game-board-title">Beste Reaktionszeiten</h3>
-                    <ol id="game-scores" class="game-scores">
-                        <li class="game-score-empty">Lädt…</li>
-                    </ol>
-                </div>
-
             </div>
+
+            <!-- Play / Retry controls -->
+            <div id="game-start-wrap" class="game-start-wrap">
+                <button id="game-start" class="game-start-btn">SPIELEN</button>
+            </div>
+
+            <div id="game-post" class="game-post" hidden>
+                <div id="game-name-wrap" class="game-name-wrap">
+                    <input id="game-name" type="text" maxlength="20"
+                           placeholder="Dein Name" class="game-name-input"
+                           autocomplete="off">
+                    <button id="game-name-submit" class="game-action-btn">EINTRAGEN</button>
+                    <button id="game-name-skip"   class="game-action-btn game-action-btn--dim">ÜBERSPRINGEN</button>
+                </div>
+                <button id="game-replay" class="game-start-btn" hidden>NOCHMAL</button>
+            </div>
+
+            <!-- Scoreboard — absolute over machine (desktop), block below controls (portrait) -->
+            <div class="game-scoreboard">
+                <img src="assets/ui/scoreboard_01.webp" class="game-scoreboard-img" alt="Beste Reaktionszeiten">
+                <ol id="game-scores" class="game-scores">
+                    <li class="game-score-empty">Lädt…</li>
+                </ol>
+            </div>
+
+            <!-- ══ TEMP DEBUG — remove when all breakpoints are calibrated ══ -->
+            <div id="game-debug"></div>
+            <script>
+            (function () {
+                var MODES = {
+                    desktop:  { gw:100, px:0,  lx:28.5, ly:63.5, rx:40, ry:63.5, sz:8, sx:26.5, sy:17.5, sw:15.5, sh:27, sbr:12, sbt:24, sbw:27.5 },
+                    portrait: { gw:250, px:39.5, lx:28.5, ly:63.5, rx:40, ry:63.5, sz:10.5, sx:26,   sy:18, sw:15.5, sh:26.5, sbr:0,  sbt:0,   sbw:50  },
+                    landscape:{ gw:100, px:0,  lx:28.5, ly:63.5, rx:40, ry:63.5, sz:8, sx:26.5, sy:17.5, sw:15.5, sh:27, sbr:19, sbt:8.5, sbw:20.5 }
+                };
+                var cfg = [
+                    { id:'gw',  label:'Bild %', min:40, max:250, step:0.5 },
+                    { id:'px',  label:'Pan X',  min:-80, max:80, step:0.5 },
+                    { id:'lx',  label:'L-X',    min:0,  max:60,  step:0.5 },
+                    { id:'ly',  label:'L-Y',    min:0,  max:100, step:0.5 },
+                    { id:'rx',  label:'R-X',    min:0,  max:60,  step:0.5 },
+                    { id:'ry',  label:'R-Y',    min:0,  max:100, step:0.5 },
+                    { id:'sz',  label:'Größe',  min:2,  max:25,  step:0.5 },
+                    { id:'sx',  label:'S-X',    min:0,  max:50,  step:0.5 },
+                    { id:'sy',  label:'S-Y',    min:0,  max:50,  step:0.5 },
+                    { id:'sw',  label:'S-B',    min:5,  max:50,  step:0.5 },
+                    { id:'sh',  label:'S-H',    min:5,  max:80,  step:0.5 },
+                    { id:'sbr', label:'SB-R',   min:0,  max:60,  step:0.5 },
+                    { id:'sbt', label:'SB-T',   min:0,  max:60,  step:0.5 },
+                    { id:'sbw', label:'SB-B',   min:5,  max:50,  step:0.5 }
+                ];
+                var curMode = 'desktop';
+                var panel = document.getElementById('game-debug');
+                var html = '<div class="gd-title">BUTTON &amp; SCREEN DEBUG</div>';
+                html += '<div class="gd-modes">'
+                      + '<button class="gd-mode gd-mode--active" data-m="desktop">Desktop</button>'
+                      + '<button class="gd-mode" data-m="portrait">Portrait</button>'
+                      + '<button class="gd-mode" data-m="landscape">Landscape</button>'
+                      + '</div>';
+                html += '<div class="gd-sep">── Bild ─────────────</div>';
+                cfg.slice(0,2).forEach(function(c){
+                    html += '<label class="gd-row">' + c.label + '<input type="range" id="gd-'+c.id+'" min="'+c.min+'" max="'+c.max+'" step="'+c.step+'"><span id="gd-'+c.id+'-v"></span></label>';
+                });
+                html += '<div class="gd-sep">── Buttons ──────────</div>';
+                cfg.slice(2,7).forEach(function(c){
+                    html += '<label class="gd-row">' + c.label + '<input type="range" id="gd-'+c.id+'" min="'+c.min+'" max="'+c.max+'" step="'+c.step+'"><span id="gd-'+c.id+'-v"></span></label>';
+                });
+                html += '<div class="gd-sep">── Screen ───────────</div>';
+                cfg.slice(7,11).forEach(function(c){
+                    html += '<label class="gd-row">' + c.label + '<input type="range" id="gd-'+c.id+'" min="'+c.min+'" max="'+c.max+'" step="'+c.step+'"><span id="gd-'+c.id+'-v"></span></label>';
+                });
+                html += '<div class="gd-sep">── Scoreboard ───────</div>';
+                cfg.slice(11).forEach(function(c){
+                    html += '<label class="gd-row">' + c.label + '<input type="range" id="gd-'+c.id+'" min="'+c.min+'" max="'+c.max+'" step="'+c.step+'"><span id="gd-'+c.id+'-v"></span></label>';
+                });
+                html += '<pre id="gd-out"></pre>';
+                panel.innerHTML = html;
+
+                var zL  = document.getElementById('game-btn-l');
+                var zR  = document.getElementById('game-btn-r');
+                var scr = document.querySelector('.game-screen-overlay');
+                document.getElementById('game-btns').hidden = false;
+                zL.style.cssText += 'background:rgba(255,40,40,0.30);outline:2px solid red;';
+                zR.style.cssText += 'background:rgba(40,40,255,0.30);outline:2px solid #44f;';
+                scr.style.outline = '2px solid lime';
+
+                function v(id){ return +document.getElementById('gd-'+id).value; }
+
+                function apply() {
+                    var r = document.documentElement.style;
+                    r.setProperty('--gm-w',      v('gw')+'%');
+                    r.setProperty('--gm-p-x',    v('px')+'%');
+                    r.setProperty('--gz-lx',     v('lx')+'%');
+                    r.setProperty('--gz-ly',     v('ly')+'%');
+                    r.setProperty('--gz-rx',     v('rx')+'%');
+                    r.setProperty('--gz-ry',     v('ry')+'%');
+                    r.setProperty('--gz-sz',     v('sz')+'%');
+                    r.setProperty('--gscreen-l', v('sx')+'%');
+                    r.setProperty('--gscreen-t', v('sy')+'%');
+                    r.setProperty('--gscreen-w', v('sw')+'%');
+                    r.setProperty('--gscreen-h', v('sh')+'%');
+                    r.setProperty('--gsb-r',     v('sbr')+'%');
+                    r.setProperty('--gsb-t',     v('sbt')+'%');
+                    r.setProperty('--gsb-w',     v('sbw')+'%');
+                    cfg.forEach(function(c){
+                        document.getElementById('gd-'+c.id+'-v').textContent = v(c.id)+'%';
+                        MODES[curMode][c.id] = v(c.id);
+                    });
+                    document.getElementById('gd-out').textContent =
+                        'MODE: '+curMode+'\n'+
+                        'bild:   '+v('gw')+'%  pan-x:'+v('px')+'%\n'+
+                        'zone-l: left:'+v('lx')+'% top:'+v('ly')+'% w:'+v('sz')+'%\n'+
+                        'zone-r: left:'+v('rx')+'% top:'+v('ry')+'% w:'+v('sz')+'%\n'+
+                        'screen: left:'+v('sx')+'% top:'+v('sy')+'%\n'+
+                        '        w:'+v('sw')+'%  h:'+v('sh')+'%\n'+
+                        'board:  right:'+v('sbr')+'% top:'+v('sbt')+'% w:'+v('sbw')+'%';
+                }
+
+                function loadMode(m) {
+                    curMode = m;
+                    var vals = MODES[m];
+                    cfg.forEach(function(c){ document.getElementById('gd-'+c.id).value = vals[c.id]; });
+                    document.querySelectorAll('.gd-mode').forEach(function(btn){
+                        btn.classList.toggle('gd-mode--active', btn.dataset.m === m);
+                    });
+                    apply();
+                }
+
+                cfg.forEach(function(c){
+                    document.getElementById('gd-'+c.id).addEventListener('input', apply);
+                });
+                document.querySelectorAll('.gd-mode').forEach(function(btn){
+                    btn.addEventListener('click', function(){ loadMode(btn.dataset.m); });
+                });
+                loadMode('desktop');
+            })();
+            </script>
+            <!-- ══ END TEMP DEBUG ══ -->
+
         </section>
 
         <!-- 7 · VOTING CTA -->
