@@ -24,6 +24,12 @@
 
     /* Total page frame */
     --page-max:       1440px;
+
+    /* ── Manual image scale per breakpoint ───────────────────────
+       1.00 = fills content column exactly (border to border)
+       > 1  = grows beyond content column toward frame edges
+       < 1  = shrinks away from edges                         */
+    --team-scale:     1.20;   /* Desktop */
 }
 
 /* ─── Reset ──────────────────────────────────────────────────── */
@@ -398,6 +404,35 @@ body {
     text-align:     center;
 }
 
+/* ─── Sections with full-width images ────────────────────────────
+   .full-img-section removes horizontal padding from content-section
+   so that .section-full-width's 100% = full content-col width.       */
+
+.full-img-section {
+    padding-left:  0;
+    padding-right: 0;
+}
+
+.section-header {
+    padding-left:  10%;
+    padding-right: 10%;
+    width:         100%;
+}
+
+.section-full-width {
+    width:      100%;
+    margin-top: 1rem;
+    overflow:   visible;
+}
+
+.section-img {
+    display:          block;
+    width:            100%;
+    height:           auto;
+    transform:        scale(var(--team-scale));
+    transform-origin: center center;
+}
+
 .placeholder-block {
     width:      100%;
     border:     1px solid rgba(255, 255, 255, 0.08);
@@ -511,8 +546,9 @@ body {
 /* Mobile — borders at screen edges, content between them */
 @media (max-width: 700px) {
     :root {
-        --border-l: 50px;
-        --border-r: 60px;
+        --border-l:   50px;
+        --border-r:   60px;
+        --team-scale: 1.40;   /* Mobile Portrait */
     }
 
     /*
@@ -696,6 +732,8 @@ body {
 
 /* Landscape phones */
 @media (max-height: 480px) and (orientation: landscape) {
+    :root { --team-scale: 1.40; }  /* Mobile Landscape */
+
     .video-section {
         height:       auto;
         aspect-ratio: 4 / 3;
