@@ -39,7 +39,7 @@ const FIREBASE_CONFIG = {
 // ─── Profanity-Filter ─────────────────────────────────────────
 const BLOCKED = [
     'arsch','scheiß','scheiss','ficken','hurensohn','wichser','wichse',
-    'fuck','shit','bitch','asshole','cunt','nigger','nazi'
+    'fuck','shit','bitch','asshole','cunt','nigger','nazi','hitler','siegheil', 
 ];
 function isProfane(s) {
     const l = s.toLowerCase();
@@ -72,14 +72,12 @@ const el = {
     nameWrap:    document.getElementById('game-name-wrap'),
     nameInput:   document.getElementById('game-name'),
     nameSubmit:  document.getElementById('game-name-submit'),
-    nameSkip:    document.getElementById('game-name-skip'),
-    replay:      document.getElementById('game-replay'),
     scores:      document.getElementById('game-scores'),
 };
 
 // ─── Spielparameter ───────────────────────────────────────────
 const COUNTDOWN_MS  = 3000; // Ziel: genau diese ms nach Start
-const AUTO_FAIL_MS  = 2000; // Fenster nach 0 bis Auto-Timeout
+const AUTO_FAIL_MS  = 3000; // Fenster nach 0 bis Auto-Timeout
 const PERFECT_MS    = 50;   // Abweichung < 50ms gilt als "PERFEKT"
 
 // ─── Spielzustand ─────────────────────────────────────────────
@@ -94,13 +92,14 @@ function startGame() {
     state = 'countdown';
     lastDev = null;
 
-    el.startWrap.hidden = true;
-    el.result.hidden    = true;
-    el.post.hidden      = true;
-    el.replay.hidden    = true;
-    el.btns.hidden      = false;
-    el.countdown.hidden = false;
-    el.countdown.className = 'game-number';
+    el.startWrap.hidden      = true;
+    el.result.hidden         = true;
+    el.post.hidden           = true;
+    el.btns.hidden           = false;
+    el.countdown.hidden      = false;
+    el.countdown.className   = 'game-number';
+    el.resultValue.textContent = '';
+    el.resultDir.textContent   = '';
 
     el.btnL.disabled = false;
     el.btnR.disabled = false;
@@ -136,10 +135,6 @@ function onClick() {
     lastDev = dev;
     const absMs = Math.abs(dev);
 
-    el.btns.hidden      = true;
-    el.countdown.hidden = true;
-    el.result.hidden    = false;
-
     el.resultValue.textContent = (absMs / 1000).toFixed(3) + ' SEK';
 
     if (absMs < PERFECT_MS) {
@@ -153,9 +148,13 @@ function onClick() {
         el.resultDir.className   = 'game-result-dir game-result-dir--late';
     }
 
-    el.post.hidden     = false;
-    el.nameWrap.hidden = false;
-    el.replay.hidden   = false;
+    el.btns.hidden      = true;
+    el.countdown.hidden = true;
+    el.result.hidden    = false;
+
+    el.post.hidden       = false;
+    el.nameWrap.hidden   = false;
+    el.startWrap.hidden  = false;
 
     el.nameInput.value       = '';
     el.nameInput.placeholder = 'Dein Name';
@@ -242,19 +241,8 @@ el.start.addEventListener('click', startGame);
 el.btnL.addEventListener('click', onClick);
 el.btnR.addEventListener('click', onClick);
 el.nameSubmit.addEventListener('click', submitScore);
-el.nameSkip.addEventListener('click', function () {
-    el.nameWrap.hidden = true;
-    loadScores();
-});
 el.nameInput.addEventListener('keydown', function (e) {
     if (e.key === 'Enter') submitScore();
-});
-el.replay.addEventListener('click', function () {
-    el.result.hidden    = true;
-    el.post.hidden      = true;
-    el.replay.hidden    = true;
-    el.countdown.hidden = false;
-    startGame();
 });
 
 // ─── Init ────────────────────────────────────────────────────

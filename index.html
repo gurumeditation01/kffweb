@@ -129,7 +129,7 @@
 
                     <!-- Screen — black numbers on CRT display -->
                     <div class="game-screen-overlay">
-                        <div id="game-countdown" class="game-number">–</div>
+                        <div id="game-countdown" class="game-number game-number--idle">KLICKE AUF<br>„SPIELEN"</div>
                         <div id="game-result" class="game-result" hidden>
                             <div id="game-result-value" class="game-result-value"></div>
                             <div id="game-result-dir"   class="game-result-dir"></div>
@@ -155,9 +155,7 @@
                            placeholder="Dein Name" class="game-name-input"
                            autocomplete="off">
                     <button id="game-name-submit" class="game-action-btn">EINTRAGEN</button>
-                    <button id="game-name-skip"   class="game-action-btn game-action-btn--dim">ÜBERSPRINGEN</button>
                 </div>
-                <button id="game-replay" class="game-start-btn" hidden>NOCHMAL</button>
             </div>
 
             <!-- Scoreboard — absolute over machine (desktop), block below controls (portrait) -->
@@ -172,6 +170,8 @@
             <div id="game-debug"></div>
             <script>
             (function () {
+                var DEBUG_ENABLED = false;
+                if (!DEBUG_ENABLED) return;
                 var MODES = {
                     desktop:  { gw:100, px:0,  lx:28.5, ly:63.5, rx:40, ry:63.5, sz:8, sx:26.5, sy:17.5, sw:15.5, sh:27, sbr:12, sbt:24, sbw:27.5 },
                     portrait: { gw:250, px:39.5, lx:28.5, ly:63.5, rx:40, ry:63.5, sz:10.5, sx:26,   sy:18, sw:15.5, sh:26.5, sbr:0,  sbt:0,   sbw:50  },
