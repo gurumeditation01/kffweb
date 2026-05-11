@@ -767,3 +767,315 @@ body {
 
     .intro-text { font-size: clamp(1.4rem, 3.5vw, 2.8rem); }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   GAME SECTION
+   ═══════════════════════════════════════════════════════════════ */
+
+.game-wrap {
+    display:         flex;
+    gap:             3.5rem;
+    width:           100%;
+    max-width:       860px;
+    align-items:     flex-start;
+    justify-content: center;
+}
+
+/* ─── Arena ──────────────────────────────────────────────────── */
+
+.game-arena {
+    flex:            0 0 auto;
+    display:         flex;
+    flex-direction:  column;
+    align-items:     center;
+    gap:             1.4rem;
+}
+
+/* CRT monitor frame */
+.game-screen-frame {
+    border:     2px solid rgba(255, 255, 255, 0.14);
+    background: #080808;
+    position:   relative;
+    box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.03),
+                inset 0 0 30px rgba(0, 0, 0, 0.6);
+}
+
+.game-screen-inner {
+    width:           280px;
+    height:          170px;
+    display:         flex;
+    flex-direction:  column;
+    align-items:     center;
+    justify-content: center;
+    gap:             0.4rem;
+}
+
+/* Large countdown number — 3 → 2 → 1 → 0 */
+.game-number {
+    font-family:    'Bebas Neue', sans-serif;
+    font-size:      clamp(5rem, 10vw, 9rem);
+    line-height:    1;
+    color:          rgba(255, 255, 255, 0.88);
+    letter-spacing: 0.02em;
+    user-select:    none;
+}
+
+.game-number--zero {
+    color:       #ff4040;
+    text-shadow: 0 0 28px rgba(255, 64, 64, 0.55);
+}
+
+/* Result panel (hidden until game ends) */
+.game-result {
+    display:        flex;
+    flex-direction: column;
+    align-items:    center;
+    gap:            0.3rem;
+    text-align:     center;
+}
+
+.game-result-value {
+    font-family:    'Bebas Neue', sans-serif;
+    font-size:      clamp(2.4rem, 5vw, 4rem);
+    line-height:    1;
+    color:          #fff;
+    letter-spacing: 0.04em;
+}
+
+.game-result-dir {
+    font-family:    'Space Mono', monospace;
+    font-size:      clamp(0.50rem, 1.1vw, 0.66rem);
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color:          var(--dim);
+}
+
+.game-result-dir--perfect {
+    color:       #44e090;
+    text-shadow: 0 0 14px rgba(68, 224, 144, 0.45);
+}
+
+.game-result-dir--early { color: #ffaa44; }
+.game-result-dir--late  { color: #55aaff; }
+
+/* Two large machine buttons — GET RICH FAST / SAVE THE WORLD */
+.game-btns {
+    display: flex;
+    gap:     1.2rem;
+}
+
+.game-btn {
+    font-family:    'Bebas Neue', sans-serif;
+    font-size:      clamp(1.0rem, 2.2vw, 1.5rem);
+    letter-spacing: 0.06em;
+    line-height:    1.2;
+    color:          #fff;
+    background:     transparent;
+    border:         2px solid rgba(255, 255, 255, 0.28);
+    padding:        1.0rem 1.2rem;
+    cursor:         pointer;
+    min-width:      110px;
+    text-align:     center;
+    transition:     border-color 0.15s ease, background 0.15s ease,
+                    transform 0.08s ease;
+    -webkit-tap-highlight-color: transparent;
+    user-select:    none;
+}
+
+.game-btn:not(:disabled):hover {
+    border-color: rgba(255, 255, 255, 0.65);
+    background:   rgba(255, 255, 255, 0.06);
+}
+
+.game-btn:not(:disabled):active {
+    transform:  scale(0.94);
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.game-btn:disabled {
+    opacity: 0.25;
+    cursor:  default;
+}
+
+/* Start / Replay CTA */
+.game-start-wrap {
+    display:         flex;
+    justify-content: center;
+}
+
+.game-start-btn {
+    font-family:    'Bebas Neue', sans-serif;
+    font-size:      clamp(1.2rem, 2.5vw, 1.75rem);
+    letter-spacing: 0.14em;
+    color:          #000;
+    background:     #fff;
+    border:         none;
+    padding:        0.7rem 2.4rem;
+    cursor:         pointer;
+    transition:     background 0.15s ease, transform 0.08s ease;
+    -webkit-tap-highlight-color: transparent;
+    user-select:    none;
+}
+
+.game-start-btn:hover  { background: rgba(255, 255, 255, 0.85); }
+.game-start-btn:active { transform: scale(0.96); }
+
+/* Post-game panel — name entry + replay */
+.game-post {
+    display:        flex;
+    flex-direction: column;
+    align-items:    center;
+    gap:            0.9rem;
+}
+
+.game-name-wrap {
+    display:        flex;
+    flex-direction: column;
+    align-items:    center;
+    gap:            0.45rem;
+    width:          100%;
+}
+
+.game-name-input {
+    font-family:    'Space Mono', monospace;
+    font-size:      0.76rem;
+    letter-spacing: 0.12em;
+    color:          #fff;
+    background:     rgba(255, 255, 255, 0.05);
+    border:         1px solid rgba(255, 255, 255, 0.22);
+    padding:        0.55rem 0.9rem;
+    width:          100%;
+    max-width:      260px;
+    outline:        none;
+    text-align:     center;
+    transition:     border-color 0.15s ease, background 0.15s ease;
+}
+
+.game-name-input::placeholder { color: rgba(255, 255, 255, 0.28); }
+
+.game-name-input:focus {
+    border-color: rgba(255, 255, 255, 0.52);
+    background:   rgba(255, 255, 255, 0.09);
+}
+
+.game-action-btn {
+    font-family:    'Space Mono', monospace;
+    font-size:      0.60rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color:          #000;
+    background:     #fff;
+    border:         none;
+    padding:        0.45rem 1.4rem;
+    cursor:         pointer;
+    transition:     background 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.game-action-btn:not(:disabled):hover { background: rgba(255, 255, 255, 0.82); }
+.game-action-btn:disabled             { opacity: 0.4; cursor: default; }
+
+.game-action-btn--dim {
+    background:  transparent;
+    color:       rgba(255, 255, 255, 0.32);
+    border:      1px solid rgba(255, 255, 255, 0.16);
+}
+
+.game-action-btn--dim:hover {
+    background:   transparent;
+    color:        rgba(255, 255, 255, 0.60);
+    border-color: rgba(255, 255, 255, 0.38);
+}
+
+/* ─── Leaderboard ────────────────────────────────────────────── */
+
+.game-board {
+    flex:      1;
+    min-width: 0;
+    max-width: 320px;
+}
+
+.game-board-title {
+    font-family:    'Space Mono', monospace;
+    font-size:      clamp(0.42rem, 0.82vw, 0.58rem);
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color:          var(--dimmer);
+    margin-bottom:  0.9rem;
+    padding-bottom: 0.5rem;
+    border-bottom:  1px solid var(--rule);
+}
+
+.game-scores {
+    list-style:     none;
+    display:        flex;
+    flex-direction: column;
+}
+
+.game-score-entry {
+    display:               grid;
+    grid-template-columns: 1fr auto auto;
+    gap:                   0.5rem;
+    align-items:           center;
+    padding:               0.42rem 0;
+    border-bottom:         1px solid var(--rule);
+}
+
+.gs-name {
+    font-family:   'Space Mono', monospace;
+    font-size:     0.60rem;
+    letter-spacing: 0.07em;
+    color:         rgba(255, 255, 255, 0.72);
+    overflow:      hidden;
+    text-overflow: ellipsis;
+    white-space:   nowrap;
+}
+
+.gs-val {
+    font-family:    'Space Mono', monospace;
+    font-size:      0.60rem;
+    letter-spacing: 0.04em;
+    color:          rgba(255, 255, 255, 0.45);
+    white-space:    nowrap;
+}
+
+.gs-dir {
+    font-size:  0.70rem;
+    color:      rgba(255, 255, 255, 0.32);
+    text-align: center;
+    min-width:  1.4em;
+}
+
+.game-score-empty {
+    font-family:    'Space Mono', monospace;
+    font-size:      0.54rem;
+    letter-spacing: 0.14em;
+    color:          var(--dimmer);
+    padding:        0.5rem 0;
+    text-align:     center;
+}
+
+/* ─── Game — mobile portrait ─────────────────────────────────── */
+@media (max-width: 700px) {
+    .game-wrap {
+        flex-direction: column;
+        align-items:    center;
+        gap:            2.5rem;
+    }
+
+    .game-screen-inner {
+        width:  240px;
+        height: 150px;
+    }
+
+    .game-board {
+        width:     100%;
+        max-width: 380px;
+    }
+
+    .game-btn {
+        font-size: clamp(0.95rem, 4vw, 1.2rem);
+        padding:   0.85rem 1rem;
+        min-width: 95px;
+    }
+}

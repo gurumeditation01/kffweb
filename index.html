@@ -119,10 +119,52 @@
         </section>
 
         <!-- 6 · GAME -->
-        <section class="content-section">
+        <section class="content-section game-section">
             <h2 class="section-title">Die Zeit läuft ab.<br>Entscheide dich jetzt.</h2>
-            <div class="placeholder-block">
-                <p class="placeholder-text">— Interactive Game —</p>
+
+            <div class="game-wrap">
+
+                <!-- Arena: screen + buttons -->
+                <div class="game-arena">
+                    <div class="game-screen-frame">
+                        <div class="game-screen-inner">
+                            <div id="game-countdown" class="game-number">–</div>
+                            <div id="game-result" class="game-result" hidden>
+                                <div id="game-result-value" class="game-result-value"></div>
+                                <div id="game-result-dir"   class="game-result-dir"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="game-btns" class="game-btns" hidden>
+                        <button class="game-btn" id="game-btn-l">GET<br>RICH<br>FAST</button>
+                        <button class="game-btn" id="game-btn-r">SAVE<br>THE<br>WORLD</button>
+                    </div>
+
+                    <div id="game-start-wrap" class="game-start-wrap">
+                        <button id="game-start" class="game-start-btn">SPIELEN</button>
+                    </div>
+
+                    <div id="game-post" class="game-post" hidden>
+                        <div id="game-name-wrap" class="game-name-wrap">
+                            <input id="game-name" type="text" maxlength="20"
+                                   placeholder="Dein Name" class="game-name-input"
+                                   autocomplete="off">
+                            <button id="game-name-submit" class="game-action-btn">EINTRAGEN</button>
+                            <button id="game-name-skip"   class="game-action-btn game-action-btn--dim">ÜBERSPRINGEN</button>
+                        </div>
+                        <button id="game-replay" class="game-start-btn" hidden>NOCHMAL</button>
+                    </div>
+                </div>
+
+                <!-- Leaderboard -->
+                <div class="game-board">
+                    <h3 class="game-board-title">Beste Reaktionszeiten</h3>
+                    <ol id="game-scores" class="game-scores">
+                        <li class="game-score-empty">Lädt…</li>
+                    </ol>
+                </div>
+
             </div>
         </section>
 
@@ -148,6 +190,10 @@
 
 <script src="js/main.js"></script>
 
+<!-- Firebase SDKs (compat build — no bundler needed) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="js/game.js"></script>
 
 </body>
 </html>
