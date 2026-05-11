@@ -386,6 +386,18 @@ body {
     margin:         0 auto;
 }
 
+.intro-text {
+    font-family:    'Bebas Neue', 'Impact', sans-serif;
+    font-size:      clamp(2.2rem, 4.0vw, 3.6rem);
+    letter-spacing: 0.06em;
+    color:          #fff;
+    text-shadow:    0 2px 14px rgba(0, 0, 0, 0.80);
+    line-height:    1.35;
+    max-width:      min(98%, 1300px);
+    margin:         0 auto;
+    text-align:     center;
+}
+
 .placeholder-block {
     width:      100%;
     border:     1px solid rgba(255, 255, 255, 0.08);
@@ -607,10 +619,22 @@ body {
         min-height: 280px;
     }
 
-    .subtitle-section,
+    .subtitle-section {
+        padding-top:    0.5rem;
+        padding-left:   1%;
+        padding-right:  1%;
+        margin-top:     -55px;
+        position:       relative;
+        z-index:        3;
+    }
+
     .content-section {
         padding-left:  6%;
         padding-right: 6%;
+    }
+
+    .intro-text {
+        font-size: clamp(1.0rem, 4.2vw, 1.2rem);
     }
 
     .countdown-value { font-size: clamp(1.3rem, 5.5vw, 2.2rem); }
@@ -686,4 +710,13 @@ body {
     .hero-vote          { display: block; bottom: 1%; }
 
     .vote-btn { max-width: 450px; }
+
+    .subtitle-section {
+        padding-top: 0.5rem;
+        margin-top:  -40px;
+        position:    relative;
+        z-index:     3;
+    }
+
+    .intro-text { font-size: clamp(1.4rem, 3.5vw, 2.8rem); }
 }
