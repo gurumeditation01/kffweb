@@ -657,11 +657,20 @@ body {
 
     .subtitle-section {
         padding-top:    0.5rem;
+        padding-bottom: 0.5rem;
         padding-left:   1%;
         padding-right:  1%;
         margin-top:     -55px;
         position:       relative;
         z-index:        3;
+    }
+
+    .full-img-section {
+        padding-top: 1.5rem;
+    }
+
+    .full-img-section .section-full-width {
+        margin-top: 0.25rem;
     }
 
     .content-section {
