@@ -784,7 +784,7 @@ body {
     --gscreen-w: 15.5%;
     --gscreen-h: 27%;
     --gsb-r:     12%;
-    --gsb-t:     24%;
+    --gsb-t:     28%;
     --gsb-w:     27.5%;
     --gm-p-x:    0%;     /* portrait: horizontal pan of machine-inner from center */
 }
@@ -876,6 +876,27 @@ body {
 }
 
 .game-zone:disabled { cursor: default; pointer-events: none; }
+
+/* Breathing glow — alternating additive white light over each button zone */
+@keyframes zone-breathe {
+    0%, 100% { opacity: 0; }
+    50%       { opacity: 0.8; }
+}
+
+.game-zone::before {
+    content:        '';
+    position:       absolute;
+    inset:          -30%;
+    border-radius:  50%;
+    background:     radial-gradient(circle, rgba(255,255,255,0.95) 0%, transparent 70%);
+    mix-blend-mode: screen;
+    filter:         blur(8px);
+    pointer-events: none;
+    opacity:        0;
+}
+
+.game-zone-l::before { animation: zone-breathe 1.5s ease-in-out infinite; }
+.game-zone-r::before { animation: zone-breathe 1.5s ease-in-out infinite -0.75s; }
 
 /* ─── Screen text — black on the light CRT display ──────────── */
 
@@ -993,6 +1014,20 @@ body {
     color:          #666;
     padding:        0.4rem 0;
     text-align:     center;
+}
+
+/* ─── Game intro text ────────────────────────────────────────── */
+
+.game-intro {
+    font-family:    'Bebas Neue', sans-serif;
+    font-size:      clamp(1rem, 2vw, 1.6rem);
+    line-height:    1.5;
+    letter-spacing: 0.08em;
+    color:          #ffffff;
+    text-align:     center;
+    margin:         1.2rem auto 0;
+    max-width:      900px;
+    padding:        0 2%;
 }
 
 /* ─── Controls ───────────────────────────────────────────────── */
