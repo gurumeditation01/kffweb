@@ -784,8 +784,8 @@ body {
     --gscreen-w: 15.5%;
     --gscreen-h: 27%;
     --gsb-r:     12%;
-    --gsb-t:     28%;
-    --gsb-w:     27.5%;
+    --gsb-t:     32%;
+    --gsb-w:     22.5%;
     --gm-p-x:    0%;     /* portrait: horizontal pan of machine-inner from center */
 }
 
@@ -1228,6 +1228,15 @@ body {
     .game-result-dir   { font-size: clamp(0.55rem, 1.2vw, 1.4rem); }
 }
 
+/* ─── Game section — landscape calibration values ────────────── */
+@media (orientation: landscape) and (max-height: 600px) {
+    :root {
+        --gsb-r: 12%;
+        --gsb-t: 30.5%;
+        --gsb-w: 28.2%;
+    }
+}
+
 /* ─── Game section — portrait calibration values ─────────────── */
 @media (max-width: 700px) {
     :root {
@@ -1265,6 +1274,10 @@ body {
         margin:    2rem auto 0;
         z-index:   auto;
     }
+
+    /* Controls closer to machine */
+    .game-start-wrap { margin-top: -1rem; }
+    .game-post        { margin-top: 1.4rem; }
 
     /* Smaller controls */
     .game-start-btn {
