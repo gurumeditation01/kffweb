@@ -480,7 +480,7 @@ body {
 
 .hero-vote {
     position:   absolute;
-    bottom:     3%;
+    bottom:     4%;
     left:       50%;
     transform:  translateX(-50%);
     z-index:    2;
@@ -499,14 +499,12 @@ body {
 
 @keyframes vote-glow-pulse {
     0%, 100% {
-        filter: drop-shadow(0 0  8px rgba(255,255,255,0.26))
-                drop-shadow(0 0 22px rgba(255,255,255,0.12))
-                drop-shadow(0 0 50px rgba(255,255,255,0.06));
+        filter: drop-shadow(0 0  4px rgba(255,255,255,0.12))
+                drop-shadow(0 0 12px rgba(255,255,255,0.06));
     }
     50% {
-        filter: drop-shadow(0 0 14px rgba(255,255,255,0.55))
-                drop-shadow(0 0 38px rgba(255,255,255,0.26))
-                drop-shadow(0 0 78px rgba(255,255,255,0.12));
+        filter: drop-shadow(0 0  8px rgba(255,255,255,0.28))
+                drop-shadow(0 0 20px rgba(255,255,255,0.12));
     }
 }
 
@@ -516,7 +514,7 @@ body {
     max-width:   850px;
     height:      auto;
     margin:      0 auto;
-    animation:   none; /* temporarily disabled */
+    animation:   vote-glow-pulse 2.5s ease-in-out infinite;
     transition:  filter 0.45s ease, transform 0.2s ease;
     will-change: filter;
 }
@@ -754,7 +752,7 @@ body {
     .countdown-label { font-size: clamp(0.42rem, 0.95vw, 0.76rem); }
 
     .hero-vote-portrait { display: none; }
-    .hero-vote          { display: block; bottom: 1%; }
+    .hero-vote          { display: block; bottom: 4%; }
 
     .vote-btn { max-width: 450px; }
 
@@ -1220,6 +1218,18 @@ body {
     white-space: pre;
 }
 
+/* ─── Desktop: longer video→background transition ────────────── */
+@media (min-width: 701px) and (min-height: 481px) {
+    .video-section::after {
+        height:     100px;
+        background: linear-gradient(to bottom, transparent 0%, #000 88%, #000 100%);
+    }
+    .vid-transition {
+        height:     220px;
+        background: linear-gradient(to bottom, #000 0%, #000 20px, transparent 100%);
+    }
+}
+
 /* ─── Game section — desktop screen text sizes ───────────────── */
 @media (min-width: 701px) {
     .game-number       { font-size: clamp(2rem, 4.5vw, 5rem); }
@@ -1227,6 +1237,7 @@ body {
     .game-result-value { font-size: clamp(1rem, 2.5vw, 2.8rem); }
     .game-result-dir   { font-size: clamp(0.55rem, 1.2vw, 1.4rem); }
 }
+
 
 /* ─── Game section — landscape calibration values ────────────── */
 @media (orientation: landscape) and (max-height: 600px) {
