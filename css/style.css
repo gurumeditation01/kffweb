@@ -448,35 +448,11 @@ body {
     margin-top: 0.5rem;
 }
 
-/* ─── BTS Grid ───────────────────────────────────────────────── */
-.bts-grid {
-    display:        flex;
-    flex-direction: column;
-    gap:            0.6rem;
-    margin-top:     1.5rem;
-    width:          100%;
-    overflow:       hidden;
-}
-
-.bts-row {
-    display: flex;
-    gap:     0.6rem;
-    width:   100%;
-}
-
-.bts-img {
-    flex:         1 1 0;
-    min-width:    0;
-    display:      block;
-    object-fit:   cover;
-}
-
-.bts-row-portrait .bts-img {
-    aspect-ratio: 2 / 3;
-}
-
-.bts-row-landscape .bts-img {
-    aspect-ratio: 16 / 9;
+/* ─── BTS ────────────────────────────────────────────────────── */
+.bts-all {
+    display:    block;
+    max-width:  100%;
+    margin:     1.5rem auto 0;
 }
 
 .placeholder-text {
