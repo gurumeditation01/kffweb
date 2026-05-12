@@ -172,6 +172,7 @@ body {
 .border-left .side-elem:nth-child(6) { top: 3239px; }
 .border-left .side-elem:nth-child(7) { display: none; }
 .border-left .side-elem:nth-child(8) { display: none; }
+.border-left .side-elem:nth-child(9) { display: none; }
 
 /*
  * Right: E_R_03(391) → E_R_01(503) → E_R_03(391) → E_R_01(503) → E_R_03(391) → E_R_01(503)
@@ -600,10 +601,11 @@ body {
     .border-left  .side-elem:nth-child(5),
     .border-right .side-elem:nth-child(5) { display: block; }
 
-    /* Show 6th–8th with portrait-specific positions */
+    /* Show 6th–9th (left) and 6th–8th (right) with portrait-specific positions */
     .border-left  .side-elem:nth-child(6),
     .border-left  .side-elem:nth-child(7),
     .border-left  .side-elem:nth-child(8),
+    .border-left  .side-elem:nth-child(9),
     .border-right .side-elem:nth-child(6),
     .border-right .side-elem:nth-child(7),
     .border-right .side-elem:nth-child(8) { display: block; }
@@ -625,6 +627,7 @@ body {
     .border-left .side-elem:nth-child(6) { top: 1690px; }
     .border-left .side-elem:nth-child(7) { top: 1840px; }
     .border-left .side-elem:nth-child(8) { top: 2084px; }
+    .border-left .side-elem:nth-child(9) { top: 2410px; }
 
     /*
      * Right: E_R_03(203) E_R_01(265) E_R_03(203) E_R_01(265) E_R_03(203) E_R_01(265) E_R_03(203) E_R_01(265)
@@ -765,6 +768,7 @@ body {
     .border-left .side-elem:nth-child(6) { top: 1337px; }
     .border-left .side-elem:nth-child(7) { top: 1450px; }
     .border-left .side-elem:nth-child(8) { top: 1638px; }
+    .border-left .side-elem:nth-child(9) { top: 1887px; }
 }
 
 /* Landscape phones */
