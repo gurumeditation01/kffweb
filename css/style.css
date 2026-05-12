@@ -448,6 +448,35 @@ body {
     margin-top: 0.5rem;
 }
 
+/* ─── BTS Grid ───────────────────────────────────────────────── */
+.bts-grid {
+    display:        flex;
+    flex-direction: column;
+    gap:            0.75rem;
+    margin-top:     1.5rem;
+}
+
+.bts-row {
+    display: flex;
+    gap:     0.75rem;
+}
+
+.bts-img {
+    display:    block;
+    width:      100%;
+    height:     100%;
+    object-fit: cover;
+    flex:       1;
+}
+
+.bts-row-portrait .bts-img {
+    aspect-ratio: 2 / 3;
+}
+
+.bts-row-landscape .bts-img {
+    aspect-ratio: 16 / 9;
+}
+
 .placeholder-text {
     font-family:    'Space Mono', monospace;
     font-size:      0.60rem;
