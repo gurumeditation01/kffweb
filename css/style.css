@@ -155,36 +155,42 @@ body {
 
 /*
  * ─── Deterministic vertical stacking (desktop) ────────────────
- * Formula: top[n] = top[n-1] + rendered-height[n-1] + GAP
- * GAP = 100px   START = 650px
- * Rendered heights from actual asset dimensions × display scale:
- *
- * Left: E_L_02(384) → E_L_01(505) → E_L_03(331) → E_L_02(384)  [4 elements desktop]
+ * Left: E_L_02(384) → E_L_01(505) → E_L_03(331) → E_L_02(384) → E_L_01(505) → E_L_03(331)
  *   GAP=130px  START=480px
  *   1: top=480               bottom=864
  *   2: top=994   (864+130)   bottom=1499
  *   3: top=1629  (1499+130)  bottom=1960
  *   4: top=2090  (1960+130)  bottom=2474
+ *   5: top=2604  (2474+130)  bottom=3109
+ *   6: top=3239  (3109+130)  bottom=3570
  */
 .border-left .side-elem:nth-child(1) { top:  480px; }
 .border-left .side-elem:nth-child(2) { top:  994px; }
 .border-left .side-elem:nth-child(3) { top: 1629px; }
 .border-left .side-elem:nth-child(4) { top: 2090px; }
-.border-left .side-elem:nth-child(5) { display: none; }
+.border-left .side-elem:nth-child(5) { top: 2604px; }
+.border-left .side-elem:nth-child(6) { top: 3239px; }
+.border-left .side-elem:nth-child(7) { display: none; }
+.border-left .side-elem:nth-child(8) { display: none; }
 
 /*
- * Right: E_R_03(391) → E_R_01(503) → E_R_03(391) → E_R_01(503)  [4 elements desktop]
+ * Right: E_R_03(391) → E_R_01(503) → E_R_03(391) → E_R_01(503) → E_R_03(391) → E_R_01(503)
  *   GAP=130px  START=480px
  *   1: top=480               bottom=871
  *   2: top=1001  (871+130)   bottom=1504
  *   3: top=1634  (1504+130)  bottom=2025
  *   4: top=2155  (2025+130)  bottom=2658
+ *   5: top=2788  (2658+130)  bottom=3179
+ *   6: top=3309  (3179+130)  bottom=3812
  */
 .border-right .side-elem:nth-child(1) { top:  480px; }
 .border-right .side-elem:nth-child(2) { top: 1001px; }
 .border-right .side-elem:nth-child(3) { top: 1634px; }
 .border-right .side-elem:nth-child(4) { top: 2155px; }
-.border-right .side-elem:nth-child(5) { display: none; }
+.border-right .side-elem:nth-child(5) { top: 2788px; }
+.border-right .side-elem:nth-child(6) { top: 3309px; }
+.border-right .side-elem:nth-child(7) { display: none; }
+.border-right .side-elem:nth-child(8) { display: none; }
 
 /* ═══════════════════════════════════════════════════════════════
    CONTENT COLUMN
@@ -594,6 +600,14 @@ body {
     .border-left  .side-elem:nth-child(5),
     .border-right .side-elem:nth-child(5) { display: block; }
 
+    /* Show 6th–8th with portrait-specific positions */
+    .border-left  .side-elem:nth-child(6),
+    .border-left  .side-elem:nth-child(7),
+    .border-left  .side-elem:nth-child(8),
+    .border-right .side-elem:nth-child(6),
+    .border-right .side-elem:nth-child(7),
+    .border-right .side-elem:nth-child(8) { display: block; }
+
     /*
      * Mobile stacking — START=400px GAP=60px
      * Left: E_L_02(184) E_L_01(266) E_L_03(90) E_L_02(184) E_L_01(266)
@@ -608,20 +622,29 @@ body {
     .border-left .side-elem:nth-child(3) { top:  970px; }
     .border-left .side-elem:nth-child(4) { top: 1120px; }
     .border-left .side-elem:nth-child(5) { top: 1364px; }
+    .border-left .side-elem:nth-child(6) { top: 1690px; }
+    .border-left .side-elem:nth-child(7) { top: 1840px; }
+    .border-left .side-elem:nth-child(8) { top: 2084px; }
 
     /*
-     * Right: E_R_03(203) E_R_01(265) E_R_03(203) E_R_01(265) E_R_03(203)
+     * Right: E_R_03(203) E_R_01(265) E_R_03(203) E_R_01(265) E_R_03(203) E_R_01(265) E_R_03(203) E_R_01(265)
      *   1: top=400               bottom=603
      *   2: top=663   (603+60)    bottom=928
      *   3: top=988   (928+60)    bottom=1191
      *   4: top=1251  (1191+60)   bottom=1516
      *   5: top=1576  (1516+60)   bottom=1779
+     *   6: top=1839  (1779+60)   bottom=2104
+     *   7: top=2164  (2104+60)   bottom=2367
+     *   8: top=2427  (2367+60)   bottom=2692
      */
     .border-right .side-elem:nth-child(1) { top:  400px; }
     .border-right .side-elem:nth-child(2) { top:  663px; }
     .border-right .side-elem:nth-child(3) { top:  988px; }
     .border-right .side-elem:nth-child(4) { top: 1251px; }
     .border-right .side-elem:nth-child(5) { top: 1576px; }
+    .border-right .side-elem:nth-child(6) { top: 1839px; }
+    .border-right .side-elem:nth-child(7) { top: 2164px; }
+    .border-right .side-elem:nth-child(8) { top: 2427px; }
 
     .hero-vote { display: none; }
 
@@ -735,6 +758,13 @@ body {
     .border-right .side-elem:nth-child(3) { top:  799px; }
     .border-right .side-elem:nth-child(4) { top: 1000px; }
     .border-right .side-elem:nth-child(5) { top: 1248px; }
+    .border-right .side-elem:nth-child(6) { top: 1449px; }
+    .border-right .side-elem:nth-child(7) { top: 1650px; }
+    .border-right .side-elem:nth-child(8) { top: 1898px; }
+
+    .border-left .side-elem:nth-child(6) { top: 1337px; }
+    .border-left .side-elem:nth-child(7) { top: 1450px; }
+    .border-left .side-elem:nth-child(8) { top: 1638px; }
 }
 
 /* Landscape phones */
