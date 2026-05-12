@@ -450,10 +450,11 @@ body {
 
 /* ─── BTS ────────────────────────────────────────────────────── */
 .bts-all {
-    display:    block;
-    max-width:  100%;
-    margin:     1.5rem auto 0;
-    filter:     drop-shadow(0 8px 32px rgba(0,0,0,0.8));
+    display:     block;
+    width:       calc(100% + 20%);
+    margin-left: -10%;
+    margin-top:  1.5rem;
+    filter:      drop-shadow(0 8px 32px rgba(0,0,0,0.8));
 }
 
 .placeholder-text {
