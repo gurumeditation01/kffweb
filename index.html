@@ -151,7 +151,16 @@
             <!-- Machine: centered, width controlled by --gm-w slider -->
             <div class="game-machine">
                 <div class="game-machine-inner">
-                    <img src="assets/ui/console_game_01.webp" class="game-machine-img" alt="">
+                    <video
+                        class="game-machine-img"
+                        autoplay
+                        muted
+                        loop
+                        playsinline
+                        preload="auto"
+                    >
+                        <source src="assets/Console_Game_Loop_01.mp4" type="video/mp4">
+                    </video>
 
                     <!-- Screen — black numbers on CRT display -->
                     <div class="game-screen-overlay">
@@ -208,6 +217,7 @@
             <script>
             (function () {
                 var DEBUG_ENABLED = false;
+                var OVERLAY_ONLY  = true;
                 if (!DEBUG_ENABLED) return;
                 var MODES = {
                     desktop:  { gw:100, px:0,  lx:28.5, ly:63.5, rx:40, ry:63.5, sz:8, sx:26.5, sy:17.5, sw:15.5, sh:27, sbr:12, sbt:32, sbw:27.5 },
@@ -256,6 +266,8 @@
                 });
                 html += '<pre id="gd-out"></pre>';
                 panel.innerHTML = html;
+
+                if (OVERLAY_ONLY) panel.hidden = true;
 
                 var zL  = document.getElementById('game-btn-l');
                 var zR  = document.getElementById('game-btn-r');

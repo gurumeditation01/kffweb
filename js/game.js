@@ -222,7 +222,9 @@ async function loadScores(ownName, ownDeviation) {
         }
 
         let ownLi = null;
+        let rank  = 0;
         snap.forEach(function (doc) {
+            rank++;
             const d   = doc.data();
             const ms  = d.deviation;
             const dir = d.signed < 0 ? '←' : '→';
@@ -231,6 +233,7 @@ async function loadScores(ownName, ownDeviation) {
                           && d.name === ownName && d.deviation === ownDeviation;
             li.className = 'game-score-entry' + (isOwn ? ' gs-own' : '');
             li.innerHTML =
+                '<span class="gs-rank">' + rank + '</span>' +
                 '<span class="gs-name">' + esc(d.name) + '</span>' +
                 '<span class="gs-val">'  + (ms / 1000).toFixed(3) + ' sek</span>' +
                 '<span class="gs-dir">'  + dir + '</span>';
