@@ -39,7 +39,9 @@ const FIREBASE_CONFIG = {
 // ─── Profanity-Filter ─────────────────────────────────────────
 const BLOCKED = [
     'arsch','scheiß','scheiss','ficken','hurensohn','wichser','wichse',
-    'fuck','shit','bitch','asshole','cunt','nigger','nazi','hitler','siegheil', 
+    'fotze','hure','schlampe','spast','schwuchtel','idiot',
+    'fuck','shit','bitch','asshole','cunt','nigger','nazi','hitler','siegheil',
+    'dick','cock','pussy','whore','slut','faggot','retard','bastard','motherfuck',
 ];
 function isProfane(s) {
     const l = s.toLowerCase();
