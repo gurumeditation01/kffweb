@@ -42,6 +42,7 @@ const BLOCKED = [
     'fotze','hure','schlampe','spast','schwuchtel','idiot',
     'fuck','shit','bitch','asshole','cunt','nigger','nazi','hitler','siegheil',
     'dick','cock','pussy','whore','slut','faggot','retard','bastard','motherfuck',
+    'trump','netanjahu','netanyahu',
 ];
 function isProfane(s) {
     const l = s.toLowerCase();
