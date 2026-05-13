@@ -441,6 +441,8 @@ body {
     transform-origin: center center;
 }
 
+.team-img-portrait { display: none; }
+
 .placeholder-block {
     width:      100%;
     border:     1px solid rgba(255, 255, 255, 0.08);
@@ -451,10 +453,19 @@ body {
 /* ─── BTS ────────────────────────────────────────────────────── */
 .bts-all {
     display:     block;
-    width:       calc(100% + 20%);
-    margin-left: -10%;
+    width:       calc(100% + 14%);
+    margin-left: -0.5%;
     margin-top:  1.5rem;
     filter:      drop-shadow(0 8px 32px rgba(0,0,0,0.8));
+}
+
+.bts-stack { display: none; }
+
+.bts-stack-img {
+    display:    block;
+    width:      100%;
+    margin-top: 0.6rem;
+    filter:     drop-shadow(0 4px 16px rgba(0,0,0,0.8));
 }
 
 .placeholder-text {
@@ -663,6 +674,15 @@ body {
 
     .hero-vote { display: none; }
 
+    .bts-all   { display: none; }
+    .bts-stack { display: block; }
+
+    .team-img-default  { display: none; }
+    .team-img-portrait { display: block; transform: scale(1.0); margin-left: 3%; }
+
+    .bts-section  { padding-top: 1rem; }
+    .game-section { padding-top: 1rem; }
+
     .hero-vote-portrait {
         display:  block;
         height:   0;
@@ -702,7 +722,7 @@ body {
     }
 
     .full-img-section {
-        padding-top: 1.5rem;
+        padding-top: 2.5rem;
     }
 
     .full-img-section .section-full-width {
@@ -813,6 +833,13 @@ body {
     }
 
     .intro-text { font-size: clamp(1.4rem, 3.5vw, 2.8rem); }
+
+    .e-l-03 { width: 80px; }
+
+    .bts-all {
+        width:       calc(100% + 14%);
+        margin-left: -1.5%;
+    }
 }
 
 /* ═══════════════════════════════════════════════════════════════
