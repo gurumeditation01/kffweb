@@ -140,10 +140,7 @@ function onClick() {
 
     el.resultValue.textContent = (absMs / 1000).toFixed(3) + ' SEK';
 
-    if (absMs < PERFECT_MS) {
-        el.resultDir.textContent = 'PERFEKT';
-        el.resultDir.className   = 'game-result-dir game-result-dir--perfect';
-    } else if (dev < 0) {
+    if (dev < 0) {
         el.resultDir.textContent = 'ZU FRÜH';
         el.resultDir.className   = 'game-result-dir game-result-dir--early';
     } else {
@@ -218,9 +215,7 @@ async function loadScores() {
         snap.forEach(function (doc) {
             const d  = doc.data();
             const ms = d.deviation;
-            const dir = ms < PERFECT_MS ? '✓'
-                      : d.signed < 0    ? '←'
-                      : '→';
+            const dir = d.signed < 0 ? '←' : '→';
             const li = document.createElement('li');
             li.className = 'game-score-entry';
             li.innerHTML =
