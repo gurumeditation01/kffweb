@@ -84,16 +84,18 @@ const AUTO_FAIL_MS  = 3000; // Fenster nach 0 bis Auto-Timeout
 const PERFECT_MS    = 50;   // Abweichung < 50ms gilt als "PERFEKT"
 
 // ─── Spielzustand ─────────────────────────────────────────────
-let state     = 'idle';
-let zeroTime  = null;  // performance.now() wenn Countdown 0 erreicht
-let rafHandle = null;
-let failTimer = null;
-let lastDev   = null;  // vorzeichenbehaftete Abweichung in ms
+let state      = 'idle';
+let zeroTime   = null;  // performance.now() wenn Countdown 0 erreicht
+let rafHandle  = null;
+let failTimer  = null;
+let lastDev    = null;  // vorzeichenbehaftete Abweichung in ms
+let lastButton = null;  // 'L' | 'R' | null (auto-fail)
 
 // ─── Spiel starten ────────────────────────────────────────────
 function startGame() {
-    state = 'countdown';
-    lastDev = null;
+    state      = 'countdown';
+    lastDev    = null;
+    lastButton = null;
 
     el.startWrap.hidden      = true;
     el.result.hidden         = true;
@@ -127,8 +129,9 @@ function startGame() {
 }
 
 // ─── Klick verarbeiten ────────────────────────────────────────
-function onClick() {
+function onClick(side) {
     if (state !== 'countdown' && state !== 'active') return;
+    lastButton = side || null;
     state = 'result';
 
     cancelAnimationFrame(rafHandle);
@@ -178,10 +181,16 @@ async function submitScore() {
         try {
             await db.collection('scores').add({
                 name:      name,
-                deviation: Math.round(Math.abs(lastDev)),
-                signed:    Math.round(lastDev),
+                deviation: Math.round(Math.abs(lastDev) * 10) / 10,
+                signed:    Math.round(lastDev * 10) / 10,
+                button:    lastButton,
                 ts:        firebase.firestore.FieldValue.serverTimestamp()
             });
+            if (lastButton) {
+                const inc = {};
+                inc['btn' + lastButton] = firebase.firestore.FieldValue.increment(1);
+                await db.collection('meta').doc('stats').set(inc, { merge: true });
+            }
         } catch (e) {
             console.error('[game] submit fehler:', e);
         }
@@ -190,11 +199,11 @@ async function submitScore() {
     el.nameWrap.hidden          = true;
     el.nameSubmit.disabled      = false;
     el.nameSubmit.textContent   = 'EINTRAGEN';
-    await loadScores();
+    await loadScores(name, Math.round(Math.abs(lastDev)));
 }
 
 // ─── Highscore laden ──────────────────────────────────────────
-async function loadScores() {
+async function loadScores(ownName, ownDeviation) {
     if (!db) {
         el.scores.innerHTML = '<li class="game-score-empty">Firebase nicht verbunden</li>';
         return;
@@ -202,7 +211,7 @@ async function loadScores() {
     try {
         const snap = await db.collection('scores')
             .orderBy('deviation', 'asc')
-            .limit(10)
+            .limit(20)
             .get();
 
         el.scores.innerHTML = '';
@@ -212,18 +221,49 @@ async function loadScores() {
             return;
         }
 
+        let ownLi = null;
         snap.forEach(function (doc) {
-            const d  = doc.data();
-            const ms = d.deviation;
+            const d   = doc.data();
+            const ms  = d.deviation;
             const dir = d.signed < 0 ? '←' : '→';
-            const li = document.createElement('li');
-            li.className = 'game-score-entry';
+            const li  = document.createElement('li');
+            const isOwn = ownName && ownDeviation !== undefined
+                          && d.name === ownName && d.deviation === ownDeviation;
+            li.className = 'game-score-entry' + (isOwn ? ' gs-own' : '');
             li.innerHTML =
                 '<span class="gs-name">' + esc(d.name) + '</span>' +
                 '<span class="gs-val">'  + (ms / 1000).toFixed(3) + ' sek</span>' +
                 '<span class="gs-dir">'  + dir + '</span>';
             el.scores.appendChild(li);
+            if (isOwn) ownLi = li;
         });
+
+        if (ownLi) {
+            setTimeout(function () {
+                ownLi.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
+        }
+
+        // Button-Stats laden
+        try {
+            const statsDoc = await db.collection('meta').doc('stats').get();
+            const statEl   = document.getElementById('game-btn-stats');
+            if (statsDoc.exists) {
+                const s     = statsDoc.data();
+                const l     = s.btnL || 0;
+                const r     = s.btnR || 0;
+                const total = l + r;
+                if (total > 0) {
+                    const pL = Math.round(l / total * 100);
+                    const pR = 100 - pL;
+                    document.getElementById('game-stat-l').textContent = pL + '%';
+                    document.getElementById('game-stat-r').textContent = pR + '%';
+                    if (statEl) statEl.hidden = false;
+                }
+            }
+        } catch (e) {
+            console.warn('[game] stats fehler:', e);
+        }
     } catch (e) {
         console.error('[game] laden fehler:', e);
         el.scores.innerHTML = '<li class="game-score-empty">Fehler beim Laden</li>';
@@ -236,8 +276,8 @@ function esc(s) {
 
 // ─── Event Listeners ─────────────────────────────────────────
 el.start.addEventListener('click', startGame);
-el.btnL.addEventListener('click', onClick);
-el.btnR.addEventListener('click', onClick);
+el.btnL.addEventListener('click', function () { onClick('L'); });
+el.btnR.addEventListener('click', function () { onClick('R'); });
 el.nameSubmit.addEventListener('click', submitScore);
 el.nameInput.addEventListener('keydown', function (e) {
     if (e.key === 'Enter') submitScore();
