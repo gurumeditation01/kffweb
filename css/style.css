@@ -474,6 +474,10 @@ body {
     margin:     0;
 }
 
+.voting-kranz-row a {
+    display: contents;
+}
+
 .voting-logo {
     display:   block;
     width:     30%;
