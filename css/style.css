@@ -1522,6 +1522,9 @@ body {
     .game-number--idle { font-size: clamp(0.9rem, 2.0vw, 2.2rem); }
     .game-result-value { font-size: clamp(1.3rem, 3.2vw, 3.6rem); }
     .game-result-dir   { font-size: clamp(0.7rem, 1.6vw, 1.8rem); }
+
+    .game-start-wrap { margin-top: -3rem; position: relative; z-index: 2; }
+    .game-post        { margin-top: 0.6rem; position: relative; z-index: 2; }
 }
 
 /* ─── Game section — portrait calibration values ─────────────── */
