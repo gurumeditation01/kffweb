@@ -67,6 +67,7 @@ body {
     align-items:          stretch;
     min-height:           100vh;
     position:             relative;
+    overflow-y:           clip;
     background-color:     #000;
     background-image:     url('../assets/ui/bg_01.webp');
     background-size:      100% auto;
