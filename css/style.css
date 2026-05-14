@@ -426,6 +426,11 @@ body {
     margin-bottom:  0.7em;
 }
 
+.section-title-sub {
+    font-size: 0.78em;
+    display:   block;
+}
+
 .section-title {
     font-family:    'Bebas Neue', 'Impact', sans-serif;
     font-size:      clamp(2rem, 5.5vw, 4.5rem);
