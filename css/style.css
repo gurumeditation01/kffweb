@@ -459,11 +459,11 @@ body {
 .voting-section .game-intro { margin-top: 0.3rem; }
 
 .voting-kranz-row {
-    display:     flex;
-    align-items: center;
+    display:         flex;
+    align-items:     center;
     justify-content: center;
-    gap:         2rem;
-    margin-top:  2.5rem;
+    gap:             8rem;
+    margin-top:      2.5rem;
 }
 
 .voting-kranz {
@@ -476,8 +476,8 @@ body {
 
 .voting-logo {
     display:   block;
-    width:     14%;
-    max-width: 120px;
+    width:     30%;
+    max-width: 280px;
     height:    auto;
 }
 
@@ -849,8 +849,9 @@ body {
     .game-section   { padding-top: 2rem; margin-top: -1.5rem; }
     .voting-section { padding-top: 1rem; margin-top: 1.5rem; }
     .voting-section .body-text { max-width: 98%; }
-    .voting-kranz      { width: 40%; max-width: 240px; }
-    .voting-logo       { width: 25%; max-width: 140px; }
+    .voting-kranz-row  { gap: 1.5rem; }
+    .voting-kranz      { width: 26%; max-width: 160px; }
+    .voting-logo       { width: 34%; max-width: 190px; }
     .game-section .section-title { margin-bottom: 1.6rem; }
     .game-section .game-intro    { margin-top: 0.4rem; }
 
@@ -1648,6 +1649,8 @@ body {
 
     .game-start-wrap { margin-top: -3rem; position: relative; z-index: 2; }
     .game-post        { margin-top: 0.6rem; position: relative; z-index: 2; }
+    .voting-kranz-row { gap: 3rem; }
+    .voting-logo      { width: 34%; max-width: 290px; }
 }
 
 /* ─── Game section — portrait calibration values ─────────────── */
