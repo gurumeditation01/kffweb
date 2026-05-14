@@ -19,8 +19,8 @@
     --screen-left:    50%;
 
     /* Border column widths — strip is on outer edge, elements point inward */
-    --border-l:       120px;   /* strip at far left, elements extend right into content */
-    --border-r:       130px;   /* strip at far right, elements extend left into content */
+    --border-l:       125px;   /* strip at far left, elements extend right into content */
+    --border-r:       125px;   /* strip at far right, elements extend left into content */
 
     /* Total page frame */
     --page-max:       1440px;
@@ -30,6 +30,9 @@
        > 1  = grows beyond content column toward frame edges
        < 1  = shrinks away from edges                         */
     --team-scale:     1.20;   /* Desktop */
+
+    --hero-filter: hue-rotate(30deg) saturate(0.9) brightness(1);
+    --game-filter: hue-rotate(30deg) saturate(0.9) brightness(1);
 }
 
 /* ─── Reset ──────────────────────────────────────────────────── */
@@ -309,6 +312,7 @@ body {
     object-fit:      cover;
     object-position: center center;
     display:         block;
+    filter:          var(--hero-filter);
 }
 
 /* ─── Video → background transition strip ────────────────────── */
@@ -454,12 +458,27 @@ body {
 
 .voting-section .game-intro { margin-top: 0.3rem; }
 
+.voting-kranz-row {
+    display:     flex;
+    align-items: center;
+    justify-content: center;
+    gap:         2rem;
+    margin-top:  2.5rem;
+}
+
 .voting-kranz {
     display:    block;
     width:      22%;
     max-width:  180px;
     height:     auto;
-    margin:     2.5rem auto 0;
+    margin:     0;
+}
+
+.voting-logo {
+    display:   block;
+    width:     14%;
+    max-width: 120px;
+    height:    auto;
 }
 
 @keyframes link-glow-pulse {
@@ -830,7 +849,8 @@ body {
     .game-section   { padding-top: 2rem; margin-top: -1.5rem; }
     .voting-section { padding-top: 1rem; margin-top: 1.5rem; }
     .voting-section .body-text { max-width: 98%; }
-    .voting-kranz   { width: 40%; max-width: 240px; }
+    .voting-kranz      { width: 40%; max-width: 240px; }
+    .voting-logo       { width: 25%; max-width: 140px; }
     .game-section .section-title { margin-bottom: 1.6rem; }
     .game-section .game-intro    { margin-top: 0.4rem; }
 
@@ -1100,6 +1120,7 @@ body {
         black       calc(100% - 80px),
         transparent 100%
     );
+    filter: var(--game-filter);
 }
 
 /* Screen overlay — tracks CRT screen position in the graphic */
@@ -1462,6 +1483,30 @@ body {
 /* ─── Debug panel (TEMP) ─────────────────────────────────────── */
 
 #game-debug:empty { display: none; }
+
+#color-debug-panel:empty { display: none; }
+
+#color-debug-panel {
+    position:   fixed;
+    top:        12px;
+    left:       12px;
+    width:      220px;
+    background: rgba(0, 0, 0, 0.90);
+    color:      #0f0;
+    padding:    10px 12px;
+    font:       11px/1.6 monospace;
+    z-index:    9999;
+    border:     1px solid rgba(255, 255, 255, 0.14);
+}
+
+#color-debug-panel #cd-out {
+    margin-top:  6px;
+    font-size:   9px;
+    color:       #ff0;
+    border-top:  1px solid #333;
+    padding-top: 4px;
+    white-space: pre;
+}
 
 #game-debug {
     position:   fixed;
