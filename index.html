@@ -140,19 +140,28 @@
         <section class="content-section bts-section">
             <h2 class="section-title">Hinter den Kulissen</h2>
             <p class="game-intro">Einblicke in Dreh und Postproduktion</p>
-            <img src="assets/ui/bts/bts_all_01.webp" class="bts-all" alt="">
+            <div class="bts-all-wrap">
+                <img src="assets/ui/bts/bts_all_01.webp" class="bts-all" alt="">
+                <div class="bts-zone" data-zone="0"></div>
+                <div class="bts-zone" data-zone="1"></div>
+                <div class="bts-zone" data-zone="2"></div>
+                <div class="bts-zone" data-zone="3"></div>
+                <div class="bts-zone" data-zone="4"></div>
+            </div>
             <div class="bts-stack">
-                <img src="assets/ui/bts/bts_l_l_01.webp" class="bts-stack-img" alt="">
-                <img src="assets/ui/bts/bts_p_l_01.webp" class="bts-stack-img" alt="">
-                <img src="assets/ui/bts/bts_p_m_01.webp" class="bts-stack-img" alt="">
-                <img src="assets/ui/bts/bts_p_r_01.webp" class="bts-stack-img" alt="">
-                <img src="assets/ui/bts/bts_l_r_01.webp" class="bts-stack-img" alt="">
+                <img src="assets/ui/bts/bts_l_l_01.webp" class="bts-stack-img" alt="" data-lb="assets/ui/bts/IMG_3305.webp">
+                <img src="assets/ui/bts/bts_p_l_01.webp" class="bts-stack-img" alt="" data-lb="assets/ui/bts/IMG_3303.webp">
+                <img src="assets/ui/bts/bts_p_m_01.webp" class="bts-stack-img" alt="" data-lb="assets/ui/bts/IMG_3300.webp">
+                <img src="assets/ui/bts/bts_p_r_01.webp" class="bts-stack-img" alt="" data-lb="assets/ui/bts/IMG_3302.webp">
+                <img src="assets/ui/bts/bts_l_r_01.webp" class="bts-stack-img" alt="" data-lb="assets/ui/bts/IMG_3313.webp">
             </div>
             <div class="bts-videos">
-                <video class="bts-video bts-video-l" autoplay muted loop playsinline preload="auto">
+                <video class="bts-video bts-video-l" autoplay muted loop playsinline preload="auto"
+                       data-lb="assets/ui/bts/BTS_S06_HD.mp4" data-lb-type="video">
                     <source src="assets/ui/bts/bts_l_l_s06.mp4" type="video/mp4">
                 </video>
-                <video class="bts-video bts-video-r" autoplay muted loop playsinline preload="auto">
+                <video class="bts-video bts-video-r" autoplay muted loop playsinline preload="auto"
+                       data-lb="assets/ui/bts/BTS_S01_HD.mp4" data-lb-type="video">
                     <source src="assets/ui/bts/bts_l_r_s01.mp4" type="video/mp4">
                 </video>
             </div>
@@ -536,6 +545,175 @@
         el.addEventListener('input', update);
     });
     update();
+})();
+</script>
+
+<!-- ══ ZONE DEBUG — set ZONE_DEBUG = false when done ══ -->
+<div id="zone-debug-panel"></div>
+<script>
+(function () {
+    var ZONE_DEBUG = false;
+    if (!ZONE_DEBUG) return;
+
+    var ZONES = [
+        { lb: 'assets/ui/bts/IMG_3303.webp', x: 1.5,  y: 1,    w: 28,   h: 56   },
+        { lb: 'assets/ui/bts/IMG_3302.webp', x: 35.5, y: 1,    w: 30,   h: 56   },
+        { lb: 'assets/ui/bts/IMG_3300.webp', x: 76.5, y: 1,    w: 27.5, h: 56   },
+        { lb: 'assets/ui/bts/IMG_3305.webp', x: 2.5,  y: 65,   w: 44,   h: 36   },
+        { lb: 'assets/ui/bts/IMG_3313.webp', x: 54.5, y: 64.5, w: 44,   h: 35.5 },
+    ];
+
+    var els    = document.querySelectorAll('.bts-zone');
+    var active = 0;
+
+    function applyZone(i) {
+        var z  = ZONES[i];
+        var el = els[i];
+        el.style.left   = z.x + '%';
+        el.style.top    = z.y + '%';
+        el.style.width  = z.w + '%';
+        el.style.height = z.h + '%';
+        el.dataset.lb   = z.lb;
+    }
+
+    function applyAll() {
+        ZONES.forEach(function (_, i) { applyZone(i); });
+        updateOut();
+        highlightActive();
+    }
+
+    function updateOut() {
+        var lines = ZONES.map(function (z, i) {
+            return 'Z' + (i+1) + ': x:' + z.x + ' y:' + z.y + ' w:' + z.w + ' h:' + z.h;
+        });
+        document.getElementById('zd-out').textContent = lines.join('\n');
+    }
+
+    function highlightActive() {
+        els.forEach(function (el, i) {
+            el.classList.toggle('bts-zone-dbg', true);
+            el.classList.toggle('zd-sel', i === active);
+        });
+    }
+
+    function selectZone(i) {
+        active = i;
+        document.querySelectorAll('.zd-tab').forEach(function (t, j) {
+            t.classList.toggle('active', j === i);
+        });
+        var z = ZONES[i];
+        document.getElementById('zd-x').value = z.x;
+        document.getElementById('zd-y').value = z.y;
+        document.getElementById('zd-w').value = z.w;
+        document.getElementById('zd-h').value = z.h;
+        document.getElementById('zd-xv').textContent = z.x + '%';
+        document.getElementById('zd-yv').textContent = z.y + '%';
+        document.getElementById('zd-wv').textContent = z.w + '%';
+        document.getElementById('zd-hv').textContent = z.h + '%';
+        highlightActive();
+    }
+
+    var panel = document.getElementById('zone-debug-panel');
+    var tabs  = ZONES.map(function (_, i) {
+        return '<button class="zd-tab' + (i===0?' active':'') + '" data-zi="'+i+'">Z'+(i+1)+'</button>';
+    }).join('');
+
+    panel.innerHTML =
+        '<div class="gd-title">ZONE DEBUG</div>'
+      + '<div class="zd-tabs">' + tabs + '</div>'
+      + '<label class="gd-row">X <input type="range" id="zd-x" min="0" max="99" step="0.5" value="1"><span id="zd-xv"></span></label>'
+      + '<label class="gd-row">Y <input type="range" id="zd-y" min="0" max="99" step="0.5" value="1"><span id="zd-yv"></span></label>'
+      + '<label class="gd-row">W <input type="range" id="zd-w" min="1" max="100" step="0.5" value="28"><span id="zd-wv"></span></label>'
+      + '<label class="gd-row">H <input type="range" id="zd-h" min="1" max="100" step="0.5" value="56"><span id="zd-hv"></span></label>'
+      + '<pre id="zd-out"></pre>';
+
+    ['x','y','w','h'].forEach(function (k) {
+        document.getElementById('zd-'+k).addEventListener('input', function () {
+            ZONES[active][k] = +this.value;
+            document.getElementById('zd-'+k+'v').textContent = this.value + '%';
+            applyZone(active);
+            updateOut();
+        });
+    });
+
+    panel.querySelectorAll('.zd-tab').forEach(function (btn) {
+        btn.addEventListener('click', function () { selectZone(+this.dataset.zi); });
+    });
+
+    applyAll();
+    selectZone(0);
+})();
+</script>
+
+<!-- ══ BTS ZONE INIT ══ -->
+<script>
+(function () {
+    var ZONES = [
+        { lb: 'assets/ui/bts/IMG_3303.webp', x: 1.5,  y: 1,    w: 28,   h: 56   },
+        { lb: 'assets/ui/bts/IMG_3302.webp', x: 35.5, y: 1,    w: 30,   h: 56   },
+        { lb: 'assets/ui/bts/IMG_3300.webp', x: 76.5, y: 1,    w: 27.5, h: 56   },
+        { lb: 'assets/ui/bts/IMG_3305.webp', x: 2.5,  y: 65,   w: 44,   h: 36   },
+        { lb: 'assets/ui/bts/IMG_3313.webp', x: 54.5, y: 64.5, w: 44,   h: 35.5 },
+    ];
+    document.querySelectorAll('.bts-zone').forEach(function (el, i) {
+        var z = ZONES[i];
+        el.style.left   = z.x + '%';
+        el.style.top    = z.y + '%';
+        el.style.width  = z.w + '%';
+        el.style.height = z.h + '%';
+        el.dataset.lb   = z.lb;
+    });
+})();
+</script>
+
+<!-- ══ LIGHTBOX ══ -->
+<div id="lb" hidden>
+    <button id="lb-close">&#x2715;</button>
+    <div id="lb-inner"></div>
+</div>
+<script>
+(function () {
+    var lb    = document.getElementById('lb');
+    var inner = document.getElementById('lb-inner');
+    var btn   = document.getElementById('lb-close');
+    var vid   = null;
+
+    function open(src, type) {
+        inner.innerHTML = '';
+        if (type === 'video') {
+            vid = document.createElement('video');
+            vid.src = src;
+            vid.controls = true;
+            vid.autoplay = true;
+            vid.playsInline = true;
+            inner.appendChild(vid);
+        } else {
+            vid = null;
+            var img = document.createElement('img');
+            img.src = src;
+            inner.appendChild(img);
+        }
+        lb.hidden = false;
+        document.body.style.overflow = 'hidden';
+    }
+
+    function close() {
+        if (vid) { vid.pause(); vid = null; }
+        inner.innerHTML = '';
+        lb.hidden = true;
+        document.body.style.overflow = '';
+    }
+
+    btn.addEventListener('click', close);
+    lb.addEventListener('click', function (e) { if (e.target === lb) close(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+
+    document.querySelectorAll('[data-lb]').forEach(function (el) {
+        el.addEventListener('click', function (e) {
+            e.preventDefault();
+            open(el.dataset.lb, el.dataset.lbType);
+        });
+    });
 })();
 </script>
 

@@ -568,13 +568,24 @@ body {
 }
 
 /* ─── BTS ────────────────────────────────────────────────────── */
-.bts-all {
+.bts-all-wrap {
+    position:    relative;
     display:     block;
     width:       calc(100% + 14%);
     margin-left: -0.5%;
     margin-top:  5rem;
     filter:      drop-shadow(0 8px 32px rgba(0,0,0,0.8));
 }
+.bts-all {
+    display: block;
+    width:   100%;
+}
+
+.bts-zone {
+    position: absolute;
+    cursor:   pointer;
+}
+.bts-zone:hover { background: rgba(255, 255, 255, 0.07); }
 
 .bts-stack { display: none; }
 
@@ -892,7 +903,7 @@ body {
 
     .hero-vote { display: none; }
 
-    .bts-all   { display: none; }
+    .bts-all-wrap { display: none; }
     .bts-stack { display: block; margin-top: 1.5rem; }
     .bts-videos { display: block; margin-top: 0; }
     .bts-video  { width: 100%; margin-top: 0.6rem; }
@@ -1097,10 +1108,7 @@ body {
 
     .e-l-03 { width: 80px; }
 
-    .bts-all {
-        width:       calc(100% + 14%);
-        margin-left: -1.5%;
-    }
+    .bts-all-wrap { margin-left: -1.5%; }
 
     :root {
         --bts-vid-gap:   2rem;
@@ -1797,4 +1805,88 @@ body {
         font-size: 0.62rem;
         max-width: 200px;
     }
+}
+
+/* ─── Zone debug panel ───────────────────────────────────────── */
+#zone-debug-panel:empty { display: none; }
+
+#zone-debug-panel {
+    position:   fixed;
+    bottom:     12px;
+    right:      12px;
+    width:      240px;
+    background: rgba(0, 0, 0, 0.90);
+    color:      #0f0;
+    padding:    10px 12px;
+    font:       11px/1.6 monospace;
+    z-index:    9999;
+    border:     1px solid rgba(255, 255, 255, 0.14);
+}
+#zone-debug-panel .zd-tabs {
+    display:    flex;
+    gap:        4px;
+    margin-bottom: 6px;
+}
+#zone-debug-panel .zd-tab {
+    flex:       1;
+    background: #222;
+    border:     1px solid #444;
+    color:      #0f0;
+    font:       10px monospace;
+    cursor:     pointer;
+    padding:    2px 0;
+    text-align: center;
+}
+#zone-debug-panel .zd-tab.active { background: #0a3a0a; border-color: #0f0; }
+#zone-debug-panel #zd-out {
+    margin-top:  6px;
+    font-size:   9px;
+    color:       #ff0;
+    border-top:  1px solid #333;
+    padding-top: 4px;
+    white-space: pre;
+}
+.bts-zone-dbg        { outline: 1px dashed rgba(0, 220, 200, 0.55); }
+.bts-zone-dbg.zd-sel { outline: 2px solid #0cf; background: rgba(0, 200, 255, 0.13); }
+
+/* ═══════════════════════════════════════════════════════════════
+   LIGHTBOX
+   ═══════════════════════════════════════════════════════════════ */
+
+[data-lb] { cursor: pointer; }
+
+#lb {
+    position:        fixed;
+    inset:           0;
+    z-index:         9000;
+    background:      rgba(0, 0, 0, 0.92);
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
+}
+#lb[hidden] { display: none; }
+
+#lb-close {
+    position:    absolute;
+    top:         16px;
+    right:       20px;
+    background:  none;
+    border:      none;
+    color:       #fff;
+    font-size:   2.4rem;
+    line-height: 1;
+    cursor:      pointer;
+    opacity:     0.65;
+    z-index:     1;
+    padding:     4px 10px;
+    transition:  opacity 0.15s;
+}
+#lb-close:hover { opacity: 1; }
+
+#lb-inner img,
+#lb-inner video {
+    max-width:  95vw;
+    max-height: 95vh;
+    object-fit: contain;
+    display:    block;
 }
