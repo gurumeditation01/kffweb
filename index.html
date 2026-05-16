@@ -148,6 +148,14 @@
                 <img src="assets/ui/bts/bts_p_r_01.webp" class="bts-stack-img" alt="">
                 <img src="assets/ui/bts/bts_l_r_01.webp" class="bts-stack-img" alt="">
             </div>
+            <div class="bts-videos">
+                <video class="bts-video bts-video-l" autoplay muted loop playsinline preload="auto">
+                    <source src="assets/ui/bts/bts_l_l_s06.mp4" type="video/mp4">
+                </video>
+                <video class="bts-video bts-video-r" autoplay muted loop playsinline preload="auto">
+                    <source src="assets/ui/bts/bts_l_r_s01.mp4" type="video/mp4">
+                </video>
+            </div>
         </section>
 
         <!-- 6 · GAME -->
@@ -393,6 +401,55 @@
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <script src="js/game.js"></script>
+
+<!-- ══ BTS VIDEO DEBUG — set BTS_DEBUG = false when done ══ -->
+<div id="bts-debug-panel"></div>
+<script>
+(function () {
+    var BTS_DEBUG = false;
+    if (!BTS_DEBUG) return;
+
+    var defaults = { lx: 0, rx: 0, gap: 2.0, mt: 3.0, sc: 1.0 };
+    var vals = Object.assign({}, defaults);
+
+    function apply() {
+        var r = document.documentElement.style;
+        r.setProperty('--bts-l-x',       vals.lx  + '%');
+        r.setProperty('--bts-r-x',       vals.rx  + '%');
+        r.setProperty('--bts-vid-gap',   vals.gap + 'rem');
+        r.setProperty('--bts-vid-mt',    vals.mt  + 'rem');
+        r.setProperty('--bts-vid-scale', vals.sc);
+        document.getElementById('bts-lx-v').textContent  = vals.lx  + '%';
+        document.getElementById('bts-rx-v').textContent  = vals.rx  + '%';
+        document.getElementById('bts-gap-v').textContent = vals.gap + 'rem';
+        document.getElementById('bts-mt-v').textContent  = vals.mt  + 'rem';
+        document.getElementById('bts-sc-v').textContent  = vals.sc;
+        document.getElementById('bts-out').textContent   =
+            '--bts-l-x:       ' + vals.lx  + '%\n' +
+            '--bts-r-x:       ' + vals.rx  + '%\n' +
+            '--bts-vid-gap:   ' + vals.gap + 'rem\n' +
+            '--bts-vid-mt:    ' + vals.mt  + 'rem\n' +
+            '--bts-vid-scale: ' + vals.sc;
+    }
+
+    var panel = document.getElementById('bts-debug-panel');
+    panel.innerHTML =
+        '<div class="gd-title">BTS VIDEO DEBUG</div>'
+      + '<label class="gd-row">Größe<input type="range" id="bts-sc"  min="0.3" max="2"    step="0.01" value="' + defaults.sc  + '"><span id="bts-sc-v"></span></label>'
+      + '<label class="gd-row">L-X  <input type="range" id="bts-lx"  min="-150" max="150" step="0.5"  value="' + defaults.lx  + '"><span id="bts-lx-v"></span></label>'
+      + '<label class="gd-row">R-X  <input type="range" id="bts-rx"  min="-150" max="150" step="0.5"  value="' + defaults.rx  + '"><span id="bts-rx-v"></span></label>'
+      + '<label class="gd-row">Gap  <input type="range" id="bts-gap" min="-15"  max="15"  step="0.1"  value="' + defaults.gap + '"><span id="bts-gap-v"></span></label>'
+      + '<label class="gd-row">Oben <input type="range" id="bts-mt"  min="-15"  max="25"  step="0.1"  value="' + defaults.mt  + '"><span id="bts-mt-v"></span></label>'
+      + '<pre id="bts-out"></pre>';
+
+    document.getElementById('bts-sc').addEventListener('input',  function(){ vals.sc  = +this.value; apply(); });
+    document.getElementById('bts-lx').addEventListener('input',  function(){ vals.lx  = +this.value; apply(); });
+    document.getElementById('bts-rx').addEventListener('input',  function(){ vals.rx  = +this.value; apply(); });
+    document.getElementById('bts-gap').addEventListener('input', function(){ vals.gap = +this.value; apply(); });
+    document.getElementById('bts-mt').addEventListener('input',  function(){ vals.mt  = +this.value; apply(); });
+    apply();
+})();
+</script>
 
 <!-- ══ COLOR DEBUG — set COLOR_DEBUG = false when done ══ -->
 <div id="color-debug-panel"></div>
