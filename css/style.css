@@ -468,6 +468,7 @@ body {
 }
 
 .voting-section .game-intro { margin-top: 0.3rem; }
+.voting-section { padding-bottom: 6rem; }
 
 .voting-kranz-row {
     display:         flex;
@@ -915,7 +916,7 @@ body {
 
     .bts-section    { padding-top: 0; margin-top: -4rem; }
     .game-section   { padding-top: 2rem; margin-top: -1.5rem; }
-    .voting-section { padding-top: 1rem; margin-top: 1.5rem; }
+    .voting-section { padding-top: 1rem; margin-top: 1.5rem; padding-bottom: 1.5rem; }
     .voting-section .body-text { max-width: 98%; }
     .voting-kranz-row  { gap: 1.5rem; }
     .voting-kranz      { width: 26%; max-width: 160px; }
@@ -1809,18 +1810,20 @@ body {
 
 /* ─── Footer ─────────────────────────────────────────────────── */
 .site-footer {
-    text-align:  center;
-    padding:     1.2rem 0 2rem;
+    text-align: center;
+    padding:    3rem 0 0;
+    position:   relative;
+    z-index:    101;
 }
 .site-footer a {
     font-family: 'Space Mono', monospace;
-    font-size:   0.55rem;
-    color:       rgba(255, 255, 255, 0.25);
+    font-size:   1rem;
+    color:       rgba(255, 255, 255, 0.45);
     text-decoration: none;
     letter-spacing:  0.08em;
     text-transform:  uppercase;
 }
-.site-footer a:hover { color: rgba(255, 255, 255, 0.55); }
+.site-footer a:hover { color: rgba(255, 255, 255, 0.75); }
 
 /* ─── Zone debug panel ───────────────────────────────────────── */
 #zone-debug-panel:empty { display: none; }
