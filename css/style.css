@@ -1810,10 +1810,10 @@ body {
 
 /* ─── Footer ─────────────────────────────────────────────────── */
 .site-footer {
-    text-align: center;
-    padding:    3rem 0 0;
-    position:   relative;
-    z-index:    101;
+    text-align:  center;
+    padding-top: 5rem;
+    position:    relative;
+    z-index:     101;
 }
 .site-footer a {
     font-family: 'Space Mono', monospace;
@@ -1824,6 +1824,11 @@ body {
     text-transform:  uppercase;
 }
 .site-footer a:hover { color: rgba(255, 255, 255, 0.75); }
+
+@media (max-width: 700px) {
+    .site-footer   { padding-top: 0.3rem; }
+    .site-footer a { font-size: 0.55rem; }
+}
 
 /* ─── Zone debug panel ───────────────────────────────────────── */
 #zone-debug-panel:empty { display: none; }
