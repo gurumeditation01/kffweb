@@ -1807,6 +1807,21 @@ body {
     }
 }
 
+/* ─── Footer ─────────────────────────────────────────────────── */
+.site-footer {
+    text-align:  center;
+    padding:     1.2rem 0 2rem;
+}
+.site-footer a {
+    font-family: 'Space Mono', monospace;
+    font-size:   0.55rem;
+    color:       rgba(255, 255, 255, 0.25);
+    text-decoration: none;
+    letter-spacing:  0.08em;
+    text-transform:  uppercase;
+}
+.site-footer a:hover { color: rgba(255, 255, 255, 0.55); }
+
 /* ─── Zone debug panel ───────────────────────────────────────── */
 #zone-debug-panel:empty { display: none; }
 
